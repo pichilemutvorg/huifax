@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum SocialPlatform: string
+use Filament\Support\Contracts\HasLabel;
+
+enum SocialPlatform: string implements HasLabel
 {
     case Facebook = 'facebook';
     case Instagram = 'instagram';
@@ -32,5 +34,10 @@ enum SocialPlatform: string
             self::Mastodon => 'Mastodon',
             self::Website => __('display.social_platforms.website'),
         };
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label();
     }
 }
