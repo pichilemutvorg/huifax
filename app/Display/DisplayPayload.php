@@ -2,7 +2,10 @@
 
 namespace App\Display;
 
+use App\Models\Background;
 use App\Models\Slide;
+use App\Settings\BrandingSettings;
+use App\Settings\DisplaySettings;
 use Carbon\CarbonImmutable;
 use Throwable;
 
@@ -16,10 +19,14 @@ use Throwable;
  */
 class DisplayPayload
 {
-    public function __construct(private SlideTypeRegistry $types) {}
+    public function __construct(
+        private SlideTypeRegistry $types,
+        private BrandingSettings $branding,
+        private DisplaySettings $display,
+    ) {}
 
     /**
-     * @return array{settings: array<string, mixed>, strings: array<string, mixed>, slides: list<array<string, mixed>>}
+     * @return array{settings: array<string, mixed>, strings: array<string, mixed>, backgrounds: list<array<string, mixed>>, slides: list<array<string, mixed>>}
      */
     public function build(?CarbonImmutable $now = null): array
     {
@@ -28,6 +35,7 @@ class DisplayPayload
         return [
             'settings' => $this->settings(),
             'strings' => (array) __('display.ui'),
+            'backgrounds' => $this->backgrounds(),
             'slides' => $this->slides($now),
         ];
     }
@@ -50,12 +58,28 @@ class DisplayPayload
         return [
             'locale' => config('huifax.display.locale'),
             'timezone' => config('app.timezone'),
-            'title' => config('huifax.branding.title'),
-            'tagline' => config('huifax.branding.tagline'),
-            'logo_url' => config('huifax.branding.logo_url'),
-            'poll_interval' => (int) config('huifax.display.poll_interval'),
-            'reload_at' => config('huifax.display.reload_at'),
+            'title' => $this->branding->title,
+            'tagline' => $this->branding->tagline,
+            'logo_url' => $this->branding->logoUrl(),
+            'poll_interval' => $this->display->poll_interval,
+            'reload_at' => $this->display->reload_at,
+            'background_interval' => $this->display->background_interval,
         ];
+    }
+
+    /**
+     * General background rotation.
+     *
+     * @return list<array<string, mixed>>
+     */
+    private function backgrounds(): array
+    {
+        return Background::query()
+            ->enabled()
+            ->ordered()
+            ->get()
+            ->map(fn (Background $background) => ['id' => $background->id, 'url' => $background->url()])
+            ->all();
     }
 
     /**
@@ -65,7 +89,7 @@ class DisplayPayload
     {
         $items = [];
 
-        foreach (Slide::query()->enabled()->ordered()->get() as $slide) {
+        foreach (Slide::query()->with('background')->enabled()->ordered()->get() as $slide) {
             $type = $this->types->find($slide->type);
 
             if ($type === null) {
@@ -86,6 +110,7 @@ class DisplayPayload
                     'id' => "{$slide->id}:{$page->key}",
                     'type' => $type->key(),
                     'duration' => $page->duration ?? $slide->duration ?? $type->defaultDuration(),
+                    'background' => $slide->background?->url(),
                     'data' => $page->data,
                 ];
             }

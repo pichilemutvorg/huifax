@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Settings\BrandingSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,10 +28,7 @@ class DisplayTest extends TestCase
 
     public function test_document_title_includes_tagline_when_configured(): void
     {
-        config([
-            'huifax.branding.title' => 'HUIFAX',
-            'huifax.branding.tagline' => 'Example tagline',
-        ]);
+        BrandingSettings::fake(['title' => 'HUIFAX', 'tagline' => 'Example tagline', 'logo_path' => null]);
 
         $this->withoutVite()
             ->get(route('display'))
@@ -39,10 +37,7 @@ class DisplayTest extends TestCase
 
     public function test_document_title_is_only_the_title_without_tagline(): void
     {
-        config([
-            'huifax.branding.title' => 'HUIFAX',
-            'huifax.branding.tagline' => null,
-        ]);
+        BrandingSettings::fake(['title' => 'HUIFAX', 'tagline' => null, 'logo_path' => null]);
 
         $this->withoutVite()
             ->get(route('display'))

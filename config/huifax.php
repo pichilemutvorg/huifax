@@ -11,9 +11,9 @@ return [
     | Display
     |--------------------------------------------------------------------------
     |
-    | Deployment-level settings for the on-air display. Instance branding and
-    | content are meant to be edited from the admin panel; until the panel's
-    | settings page exists, branding defaults are read from here.
+    | Deployment-level settings for the on-air display. `poll_interval` and
+    | `reload_at` (and the branding below) are only initial values: once the
+    | database is migrated they are edited from the admin panel.
     |
     */
 
@@ -59,10 +59,10 @@ return [
 
     'source_url' => env('HUIFAX_SOURCE_URL', 'https://github.com/pichilemutvorg/huifax'),
 
+    // Initial branding, copied into the panel settings on first migration.
     'branding' => [
         'title' => env('HUIFAX_TITLE', 'HUIFAX'),
         'tagline' => env('HUIFAX_TAGLINE'),
-        'logo_url' => env('HUIFAX_LOGO_URL'),
     ],
 
 ];
