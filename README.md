@@ -27,7 +27,15 @@ php artisan storage:link         # publica las imágenes subidas desde el panel
 php artisan make:filament-user   # crea un usuario para /admin (rol editor)
 php artisan huifax:admin correo@ejemplo.org     # lo convierte en administrador
 php artisan db:seed --class=DemoContentSeeder   # contenido de ejemplo (solo desarrollo)
+php artisan huifax:weather       # trae el pronóstico de las diapositivas de clima
 composer dev                     # servidor + Vite en modo desarrollo
+```
+
+En producción, el pronóstico se actualiza cada 30 minutos con el scheduler de
+Laravel. Hay que agregar al cron del servidor:
+
+```cron
+* * * * * cd /ruta/a/huifax && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 - Pantalla al aire: `/`

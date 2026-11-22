@@ -54,5 +54,8 @@ class DemoContentSeeder extends Seeder
         foreach (['notices', 'emergency_contacts', 'social_links'] as $index => $type) {
             Slide::create(['type' => $type, 'sort_order' => $index]);
         }
+
+        // Its forecast arrives with `php artisan huifax:weather` (or the scheduler).
+        Slide::create(['type' => 'weather', 'sort_order' => 3, 'settings' => ['location' => 'stgoc']]);
     }
 }

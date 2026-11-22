@@ -379,6 +379,56 @@ opcional en cada diapositiva (`slides.background_id`).**
 - El pie del panel enlaza al código fuente (`HUIFAX_SOURCE_URL`), como exige
   la AGPL (§13). El menú incluye "Ver pantalla".
 
+### 2026-11-22 — Clima (Fase 3)
+
+**Proveedores intercambiables.** Cada fuente implementa
+`App\Weather\WeatherProvider` (`locations()`, `forecasts()`, `iconUrl()`,
+`attribution()`), y se elige con `huifax.weather.provider`. La primera es
+`MeteochileProvider` (Dirección Meteorológica de Chile); una instancia de otro
+país puede agregar la suya sin tocar el resto. Todo se normaliza a `Forecast`:
+días con mínima y máxima, y cuatro tramos (`dawn`, `morning`, `afternoon`,
+`night`), o un `summary` para el "resto del día".
+
+**Formato de meteochile** (verificado contra el JSON real y el código de su
+portal):
+- `fechasql` es la fecha del primer día; los días siguientes son
+  consecutivos.
+- `temperatura` viene como `"mín/máx"`.
+- `icono` y `texto` traen cuatro tramos por día: madrugada, mañana, tarde y
+  noche.
+- `*_resto_dia` describe el resto del día anterior a `fechasql`.
+- Los textos traen entidades HTML (`mi&eacute;rcoles`).
+
+Fixture real recortado en `tests/Fixtures/meteochile/`.
+
+**Actualización y caché:**
+- `php artisan huifax:weather` consulta la fuente para las localidades que
+  usan las diapositivas de clima, y el scheduler lo ejecuta cada 30 minutos.
+  Requiere `schedule:run` en el cron del servidor.
+- Además, guardar una diapositiva de clima dispara una actualización después
+  de responder, para no esperar al siguiente ciclo.
+- Se guarda el último pronóstico válido por localidad (`weather_forecasts`).
+  Un fallo de red, un HTTP de error o un JSON inválido nunca lo sobrescriben.
+- Los íconos se descargan una vez al disco `public`: la pantalla nunca pide
+  nada a la fuente externa. Se aceptan solo nombres de archivo simples
+  (`/^[a-z0-9_]+\.png$/`), con tipo `image/*` y un máximo de 512 KB.
+
+**Qué se muestra:**
+- Solo los días desde hoy, en la zona de la instancia. Un pronóstico obtenido
+  hace más de 72 horas no se muestra, y la diapositiva se salta (nunca
+  aparece información vieja ni un error).
+- "Hoy" muestra el tramo que corresponde a la hora: madrugada de 0 a 6,
+  mañana de 6 a 12, tarde de 12 a 18 y noche de 18 a 24. El tramo se fija
+  cuando la diapositiva sale al aire y no cambia mientras está en pantalla.
+  Los días siguientes muestran la tarde.
+- Siempre se cita la fuente ("Información proporcionada por la Dirección
+  Meteorológica de Chile").
+- La localidad es un ajuste de cada diapositiva. Se puede tener una por
+  ciudad.
+
+**Pruebas:** `Http::preventStrayRequests()` en el `TestCase` base, para que
+ninguna prueba salga a la red.
+
 ## Pendientes
 
 - **Radio:** la URL del stream está por llegar. Debe ser configurable desde el
