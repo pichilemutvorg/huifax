@@ -1,18 +1,74 @@
 @import 'tailwindcss';
 @plugin 'daisyui' {
-    themes: dark --default;
+    themes: false;
 }
 
-@source '../js/display/**/*.vue';
+@plugin 'daisyui/theme' {
+    name: 'huifax';
+    default: true;
+    prefersdark: false;
+    color-scheme: dark;
+
+    --color-base-100: oklch(21% 0.04 245);
+    --color-base-200: oklch(27% 0.045 245);
+    --color-base-300: oklch(33% 0.05 245);
+    --color-base-content: oklch(97% 0.01 245);
+    --color-primary: oklch(80% 0.13 195);
+    --color-primary-content: oklch(20% 0.04 195);
+    --color-secondary: oklch(78% 0.12 75);
+    --color-secondary-content: oklch(22% 0.04 75);
+    --color-accent: oklch(86% 0.14 85);
+    --color-accent-content: oklch(22% 0.04 85);
+    --color-neutral: oklch(30% 0.03 245);
+    --color-neutral-content: oklch(95% 0.01 245);
+    --color-info: oklch(75% 0.12 230);
+    --color-info-content: oklch(20% 0.04 230);
+    --color-success: oklch(78% 0.15 150);
+    --color-success-content: oklch(20% 0.04 150);
+    --color-warning: oklch(84% 0.15 80);
+    --color-warning-content: oklch(22% 0.05 80);
+    --color-error: oklch(70% 0.19 25);
+    --color-error-content: oklch(98% 0.01 25);
+
+    --radius-selector: 1rem;
+    --radius-field: 0.5rem;
+    --radius-box: 1rem;
+
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+
+    --border: 2px;
+
+    --depth: 0;
+    --noise: 0;
+}
+
+@source '../js/display/**/*.{vue,js}';
 @source '../views/display.blade.php';
 
-/* Full-window display: no scrollbars, no cursor. The scaled 1920×1080 canvas arrives in Phase 1. */
+/* Full-window display: no scrollbars, no cursor. */
 html,
-body {
+body,
+#display {
     margin: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     background: #000;
     cursor: none;
+}
+
+/*
+ * Slide entry: opacity and transform only, so it runs on the compositor.
+ * Pure CSS on mount; it does not depend on JavaScript or events to finish.
+ */
+.slide-enter {
+    animation: slide-enter 700ms ease-out;
+}
+
+@keyframes slide-enter {
+    from {
+        opacity: 0;
+        transform: translateY(1.5rem);
+    }
 }

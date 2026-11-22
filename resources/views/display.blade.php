@@ -1,10 +1,10 @@
 @php
-    $title = config('huifax.branding.title');
-    $tagline = config('huifax.branding.tagline');
+    $title = $payload['settings']['title'];
+    $tagline = $payload['settings']['tagline'];
 @endphp
 
 <!doctype html>
-<html lang="{{ config('huifax.display.locale') }}" data-theme="dark">
+<html lang="{{ $payload['settings']['locale'] }}" data-theme="huifax">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,9 +14,12 @@
 <body>
     <div
         id="display"
-        class="h-full w-full"
-        data-locale="{{ config('huifax.display.locale') }}"
-        data-timezone="{{ config('app.timezone') }}"
+        data-api-url="{{ route('api.display') }}"
+        data-health-url="{{ url('/up') }}"
+        data-etag="{{ $etag }}"
     ></div>
+    <script type="application/json" id="display-payload">
+        {!! json_encode($payload, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) !!}
+    </script>
 </body>
 </html>
