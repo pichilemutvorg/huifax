@@ -110,11 +110,13 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 
 ### Fase 3 — Fuentes externas
 
-- [ ] Adaptador meteochile, con fixtures (respuesta normal, vacía, malformada,
-      error de red) e íconos servidos localmente o mediante el proxy.
-- [ ] Diseño y recurso de Programación en el panel (sin Google Calendar),
-      con su diapositiva.
-- [ ] Citar las fuentes en pantalla.
+- [x] Clima: proveedor intercambiable, adaptador de meteochile con fixtures
+      (respuesta real, vacía, malformada, HTTP de error y sin red), último dato
+      válido, íconos locales, diapositiva con hoy y los cuatro días siguientes,
+      y cita de la fuente.
+- [ ] Programación: diseñar el modelo (programas, horarios recurrentes,
+      excepciones), su recurso en el panel y su diapositiva. Sin Google
+      Calendar.
 
 ### Fase 4 — Audio y robustez
 
