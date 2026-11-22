@@ -13,6 +13,18 @@ use Illuminate\Database\Eloquent\Builder;
 trait HasDisplayOrder
 {
     /**
+     * New records go to the end of the list unless a position is given.
+     */
+    protected static function bootHasDisplayOrder(): void
+    {
+        static::creating(function ($model) {
+            if ($model->sort_order === null) {
+                $model->sort_order = (int) static::query()->max('sort_order') + 1;
+            }
+        });
+    }
+
+    /**
      * Only records enabled in the admin panel.
      */
     #[Scope]
