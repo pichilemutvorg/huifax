@@ -1,9 +1,11 @@
 <script setup>
 import { computed } from 'vue';
+import BackgroundLayer from './components/BackgroundLayer.vue';
 import DisplayFooter from './components/DisplayFooter.vue';
 import DisplayHeader from './components/DisplayHeader.vue';
 import DisplayStage from './components/DisplayStage.vue';
 import SlideCarousel from './components/SlideCarousel.vue';
+import { useBackground } from './composables/useBackground.js';
 import { useDisplayContent } from './composables/useDisplayContent.js';
 import { useRotation } from './composables/useRotation.js';
 import { useScheduledReload } from './composables/useScheduledReload.js';
@@ -27,6 +29,7 @@ const settings = computed(() => content.value.settings);
 const strings = computed(() => content.value.strings);
 
 const { current, skip } = useRotation(content, applyPending);
+const { url: backgroundUrl } = useBackground(content, current);
 
 useScheduledReload(
     () => settings.value.reload_at,
@@ -37,8 +40,9 @@ useScheduledReload(
 
 <template>
     <DisplayStage>
+        <BackgroundLayer :url="backgroundUrl" />
         <!-- Safe area: ~5% horizontal and vertical margins for TV overscan. -->
-        <div class="flex h-full flex-col px-24 py-14">
+        <div class="relative flex h-full flex-col px-24 py-14">
             <DisplayHeader :settings="settings" />
             <main class="min-h-0 flex-1 py-12">
                 <SlideCarousel :slide="current" :settings="settings" :strings="strings" @error="skip" />

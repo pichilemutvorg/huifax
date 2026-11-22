@@ -5,7 +5,7 @@
  *
  * @param {unknown} payload
  * @param {Set<string>} knownTypes Slide types with a registered component.
- * @returns {{ settings: object, strings: object, slides: Array<{ id: string, type: string, duration: number, data: object }> } | null}
+ * @returns {{ settings: object, strings: object, backgrounds: Array<{ id: number, url: string }>, slides: Array<{ id: string, type: string, duration: number, background: string | null, data: object }> } | null}
  */
 export function normalizePayload(payload, knownTypes) {
     if (!isObject(payload) || !isObject(payload.settings) || !Array.isArray(payload.slides)) {
@@ -15,8 +15,19 @@ export function normalizePayload(payload, knownTypes) {
     return {
         settings: payload.settings,
         strings: isObject(payload.strings) ? payload.strings : {},
-        slides: payload.slides.filter((slide) => isValidSlide(slide) && knownTypes.has(slide.type)),
+        backgrounds: Array.isArray(payload.backgrounds) ? payload.backgrounds.filter(isValidBackground) : [],
+        slides: payload.slides
+            .filter((slide) => isValidSlide(slide) && knownTypes.has(slide.type))
+            .map((slide) => ({ ...slide, background: isNonEmptyString(slide.background) ? slide.background : null })),
     };
+}
+
+function isValidBackground(background) {
+    return isObject(background) && isNonEmptyString(background.url);
+}
+
+function isNonEmptyString(value) {
+    return typeof value === 'string' && value !== '';
 }
 
 function isValidSlide(slide) {
