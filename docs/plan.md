@@ -93,18 +93,20 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 - [x] Polling con backoff y cambios aplicados entre diapositivas.
 - [x] Recarga diaria programada, condicionada a que el servidor responda.
 - [x] Seeder de contenido de ejemplo y pruebas (PHPUnit y Vitest).
-- [ ] Fondo con fotografías que rotan (requiere subir imágenes desde el
-      panel; pasa a la Fase 2).
+- [x] Fondo con fotografías que rotan (hecho en la Fase 2).
 - [ ] Revisión visual en CasparCG real.
 
 ### Fase 2 — Panel de administración
 
-- [ ] Login y usuarios (Filament).
-- [ ] Enlace al código fuente en el panel, con URL configurable (AGPL §13).
-- [ ] Recursos: Avisos (con vigencia desde/hasta), Números de emergencia,
-      Redes sociales, Diapositivas (orden, duración, habilitada), Fondos
-      (subida de imágenes, con su rotación en la pantalla), Configuración
-      general (marca, logo, audio, intervalo de consulta, hora de recarga).
+- [x] Login, usuarios y dos roles (administrador y editor) con policies.
+- [x] Enlace al código fuente en el panel, con URL configurable (AGPL §13).
+- [x] Recursos: avisos (con vigencia y estado), números de emergencia, redes
+      sociales, diapositivas (tipo, orden, duración, fondo y ajustes propios
+      del tipo), fondos (subida de imágenes) y usuarios.
+- [x] Ajustes: marca (título, lema, logo), pantalla (intervalos y recarga) y
+      audio (solo la configuración; el reproductor es de la Fase 4).
+- [x] Fondos en la pantalla: rotación general y fondo propio por diapositiva,
+      con precarga y fundido.
 
 ### Fase 3 — Fuentes externas
 
