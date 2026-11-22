@@ -1,0 +1,316 @@
+{
+ "Pronostico": [
+  {
+   "indice": "arica",
+   "ciudad": "Arica",
+   "region": "01a",
+   "fechasql": "2026-11-22",
+   "fechasqlredaccion": "2026-11-21 17:10:34",
+   "tope": 5,
+   "icono_resto_dia": "parcialnoche.png",
+   "texto_resto_dia": "Nublado variando a cubierto",
+   "fecha_resto_dia": "s&aacute;bado 21",
+   "fecha": [
+    "domingo 22",
+    "lunes 23",
+    "martes 24",
+    "mi&eacute;rcoles 25",
+    "jueves 26",
+    "",
+    ""
+   ],
+   "temperatura": [
+    "22/27",
+    "22/28",
+    "22/27",
+    "22/27",
+    "23/27"
+   ],
+   "icono": [
+    [
+     "cubierto.png",
+     "cubierto.png",
+     "parcial.png",
+     "cubierto.png"
+    ],
+    [
+     "cubierto.png",
+     "cubierto.png",
+     "parcialalta.png",
+     "parcialnoche.png"
+    ],
+    [
+     "cubierto.png",
+     "cubierto.png",
+     "parcialalta.png",
+     "parcialnoche.png"
+    ],
+    [
+     "cubierto.png",
+     "cubierto.png",
+     "parcialalta.png",
+     "parcialnoche.png"
+    ],
+    [
+     "cubierto.png",
+     "cubierto.png",
+     "parcialalta.png",
+     "parcialaltanoche.png"
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ]
+   ],
+   "texto": [
+    [
+     "Cubierto",
+     "Cubierto",
+     "Nublado variando a despejado con viento entre 25 y 40 km/h",
+     "Cubierto"
+    ],
+    [
+     "Cubierto",
+     "Cubierto",
+     "Nublado variando a despejado con viento entre 25 y 40 km/h",
+     "Nublado"
+    ],
+    [
+     "Cubierto",
+     "Cubierto",
+     "Nubosidad parcial con viento entre 25 y 40 km/h",
+     "Nublado"
+    ],
+    [
+     "Cubierto",
+     "Cubierto",
+     "Nublado variando a nubosidad parcial con viento entre 25 y 40 km/h",
+     "Nublado"
+    ],
+    [
+     "Cubierto",
+     "Cubierto variando a nubosidad parcial",
+     "Nubosidad parcial con viento entre 25 y 40 km/h",
+     "Nubosidad parcial"
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ]
+   ],
+   "redaccion": "Informaci&oacute;n redactada el d&iacute;a s&aacute;bado 21 a las 17:10 hrs."
+  },
+  {
+   "indice": "pichilemu",
+   "ciudad": "Pichilemu",
+   "region": "06",
+   "fechasql": "2026-11-22",
+   "fechasqlredaccion": "2026-11-21 16:56:16",
+   "tope": 5,
+   "icono_resto_dia": "viento3.png",
+   "texto_resto_dia": "Despejado con viento entre 25 y 40 km/h",
+   "fecha_resto_dia": "s&aacute;bado 21",
+   "fecha": [
+    "domingo 22",
+    "lunes 23",
+    "martes 24",
+    "mi&eacute;rcoles 25",
+    "jueves 26",
+    "",
+    ""
+   ],
+   "temperatura": [
+    "12/20",
+    "13/20",
+    "14/21",
+    "13/22",
+    "14/22"
+   ],
+   "icono": [
+    [
+     "despejadonoche.png",
+     "despejado.png",
+     "viento3.png",
+     "viento3.png"
+    ],
+    [
+     "parcialaltanoche.png",
+     "parcialalta.png",
+     "viento3.png",
+     "viento3.png"
+    ],
+    [
+     "despejadonoche.png",
+     "viento3.png",
+     "viento3.png",
+     "despejadonoche.png"
+    ],
+    [
+     "despejadonoche.png",
+     "despejado.png",
+     "viento3.png",
+     "despejadonoche.png"
+    ],
+    [
+     "despejadonoche.png",
+     "despejado.png",
+     "despejado.png",
+     "despejadonoche.png"
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ]
+   ],
+   "texto": [
+    [
+     "Despejado",
+     "Despejado",
+     "Despejado variando a nubosidad parcial con viento entre 25 y 40 km/h",
+     "Nubosidad parcial con viento entre 25 y 40 km/h"
+    ],
+    [
+     "Nubosidad parcial",
+     "Nubosidad parcial",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado con viento entre 25 y 40 km/h"
+    ],
+    [
+     "Despejado",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado"
+    ],
+    [
+     "Despejado",
+     "Despejado",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado"
+    ],
+    [
+     "Despejado",
+     "Despejado",
+     "Despejado",
+     "Despejado"
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ]
+   ],
+   "redaccion": "Informaci&oacute;n redactada el d&iacute;a s&aacute;bado 21 a las 16:56 hrs."
+  },
+  {
+   "indice": "valpo",
+   "ciudad": "Valpara&iacute;so",
+   "region": "05",
+   "fechasql": "2026-11-22",
+   "fechasqlredaccion": "2026-11-21 23:11:59",
+   "tope": 7,
+   "icono_resto_dia": "viento3.png",
+   "texto_resto_dia": "Despejado con viento entre 25 y 40 km/h",
+   "fecha_resto_dia": "s&aacute;bado 21",
+   "fecha": [
+    "domingo 22",
+    "lunes 23",
+    "martes 24",
+    "mi&eacute;rcoles 25",
+    "jueves 26",
+    "viernes 27",
+    "s&aacute;bado 28"
+   ],
+   "temperatura": [
+    "11/22",
+    "11/22",
+    "11/23",
+    "12/23",
+    "12/21"
+   ],
+   "icono": [
+    [
+     "parcialaltanoche.png",
+     "despejado.png",
+     "viento3.png",
+     "viento3.png"
+    ],
+    [
+     "parcialaltanoche.png",
+     "parcialalta.png",
+     "viento3.png",
+     "viento3.png"
+    ],
+    [
+     "despejadonoche.png",
+     "viento3.png",
+     "viento3.png",
+     "viento3.png"
+    ],
+    [
+     "despejadonoche.png",
+     "despejado.png",
+     "despejado.png",
+     "despejadonoche.png"
+    ],
+    [
+     "parcialaltanoche.png",
+     "parcial.png",
+     "parcialalta.png",
+     "parcialaltanoche.png"
+    ],
+    [
+     "despejado.png"
+    ],
+    [
+     "despejado.png"
+    ]
+   ],
+   "texto": [
+    [
+     "Nubosidad parcial",
+     "Despejado",
+     "Despejado variando a nubosidad parcial con viento entre 25 y 40 km/h",
+     "Nubosidad parcial con viento entre 25 y 40 km/h"
+    ],
+    [
+     "Nubosidad parcial",
+     "Nubosidad parcial",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado con viento entre 25 y 40 km/h"
+    ],
+    [
+     "Despejado",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado con viento entre 25 y 40 km/h",
+     "Despejado con viento entre 25 y 40 km/h"
+    ],
+    [
+     "Despejado",
+     "Despejado",
+     "Despejado",
+     "Despejado"
+    ],
+    [
+     "Nubosidad parcial",
+     "Nublado",
+     "Nubosidad parcial",
+     "Nubosidad parcial"
+    ],
+    [
+     "m&iacute;nima 8,1 hasta 12 (Fresco)<br>m&aacute;xima 20,1 hasta 24 (Templado)"
+    ],
+    [
+     "m&iacute;nima 8,1 hasta 12 (Fresco)<br>m&aacute;xima 20,1 hasta 24 (Templado)"
+    ]
+   ],
+   "redaccion": "Informaci&oacute;n redactada el d&iacute;a s&aacute;bado 21 a las 23:11 hrs."
+  }
+ ]
+}

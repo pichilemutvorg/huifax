@@ -74,6 +74,7 @@ return [
             'name' => 'Nombre interno',
             'background' => 'Fondo propio',
             'heading' => 'Encabezado',
+            'location' => 'Localidad',
             'per_page' => 'Elementos por página',
         ],
         'help' => [
@@ -81,11 +82,13 @@ return [
             'duration' => 'Déjalo vacío para usar la duración por defecto del tipo (:seconds s).',
             'background' => 'Reemplaza la rotación de fondos mientras esta diapositiva está al aire.',
             'heading' => 'Déjalo vacío para usar el encabezado por defecto.',
+            'location' => 'Localidades disponibles en la fuente de datos del clima.',
             'per_page' => 'Si hay más, se reparten en varias páginas.',
         ],
     ],
 
     'slide_types' => [
+        'weather' => 'Pronóstico del tiempo',
         'emergency_contacts' => 'Números de emergencia',
         'social_links' => 'Redes sociales',
         'notices' => 'Avisos',

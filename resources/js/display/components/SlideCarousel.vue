@@ -27,7 +27,13 @@ onErrorCaptured((error, instance, info) => {
         transitionend events, and if those stall the slide stays hidden.
     -->
     <div :key="slide?.id ?? 'idle'" class="slide-enter h-full">
-        <component :is="slideComponents[slide.type]" v-if="slide" :data="slide.data" :strings="strings" />
+        <component
+            :is="slideComponents[slide.type]"
+            v-if="slide"
+            :data="slide.data"
+            :strings="strings"
+            :settings="settings"
+        />
         <IdleSlide v-else :settings="settings" />
     </div>
 </template>

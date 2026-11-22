@@ -74,6 +74,7 @@ return [
             'name' => 'Internal name',
             'background' => 'Own background',
             'heading' => 'Heading',
+            'location' => 'Location',
             'per_page' => 'Items per page',
         ],
         'help' => [
@@ -81,11 +82,13 @@ return [
             'duration' => 'Leave empty to use the type default (:seconds s).',
             'background' => 'Replaces the background rotation while this slide is on screen.',
             'heading' => 'Leave empty to use the default heading.',
+            'location' => 'Locations available from the weather data source.',
             'per_page' => 'Extra items are split across several pages.',
         ],
     ],
 
     'slide_types' => [
+        'weather' => 'Weather forecast',
         'emergency_contacts' => 'Emergency numbers',
         'social_links' => 'Social links',
         'notices' => 'Notices',

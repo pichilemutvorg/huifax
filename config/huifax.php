@@ -3,6 +3,8 @@
 use App\Display\SlideTypes\EmergencyContactsSlide;
 use App\Display\SlideTypes\NoticesSlide;
 use App\Display\SlideTypes\SocialLinksSlide;
+use App\Display\SlideTypes\WeatherSlide;
+use App\Weather\Providers\MeteochileProvider;
 
 return [
 
@@ -44,6 +46,22 @@ return [
         EmergencyContactsSlide::class,
         SocialLinksSlide::class,
         NoticesSlide::class,
+        WeatherSlide::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Weather
+    |--------------------------------------------------------------------------
+    |
+    | Source for weather slides (a class implementing App\Weather\WeatherProvider).
+    | Forecasts are fetched by `php artisan huifax:weather`, scheduled every
+    | 30 minutes.
+    |
+    */
+
+    'weather' => [
+        'provider' => MeteochileProvider::class,
     ],
 
     /*
