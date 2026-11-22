@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DisplayTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_display_page_mounts_the_app_with_instance_locale_and_timezone(): void
     {
         config([
@@ -18,7 +21,8 @@ class DisplayTest extends TestCase
             ->assertOk()
             ->assertSee('<html lang="es-CL"', false)
             ->assertSee('id="display"', false)
-            ->assertSee('data-timezone="America/Santiago"', false);
+            ->assertSee('id="display-payload"', false)
+            ->assertSee('"timezone":"America\\/Santiago"', false);
     }
 
     public function test_document_title_includes_tagline_when_configured(): void
