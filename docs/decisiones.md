@@ -320,6 +320,65 @@ contraste y bordes redondeados. Tipografía del sistema por ahora. Es un punto
 de partida para iterar; la personalización por instancia vendrá desde el
 panel.
 
+### 2026-11-22 — Panel de administración (Fase 2)
+
+**Ajustes editables: `spatie/laravel-settings`** (MIT), con el plugin oficial
+de Filament para sus páginas. Hay tres clases en `app/Settings`:
+- `BrandingSettings`: título, lema y logo.
+- `DisplaySettings`: intervalo de consulta, hora de recarga e intervalo de
+  fondos.
+- `AudioSettings`: activar la radio en la página, URL del stream y volumen.
+  El reproductor llega en la Fase 4.
+
+Sus migraciones (`database/settings`) toman los valores iniciales del `.env`
+(`HUIFAX_TITLE`, `HUIFAX_POLL_INTERVAL`, etc.); desde ahí en adelante se editan
+en el panel. Lo que es propio del despliegue (zona horaria, locale y URL del
+código fuente) sigue en `.env`.
+**Descartado:** una tabla clave-valor propia, porque había que escribir a mano
+los tipos, la caché y las páginas.
+
+**Roles: un enum `UserRole` en la columna `users.role`**, sin un paquete de
+permisos. Hay dos roles fijos:
+- **administrador:** todo.
+- **editor:** solo avisos, números de emergencia y redes sociales.
+
+Las restricciones se aplican con policies de Laravel (`SlidePolicy`,
+`BackgroundPolicy`, `UserPolicy`), que Filament respeta, y con `canAccess()`
+en las páginas de ajustes. Los usuarios nuevos son editores, por mínimo
+privilegio; `php artisan huifax:admin {email}` los promueve. Nadie puede
+borrar su propia cuenta ni cambiar su propio rol, así que siempre queda al
+menos un administrador.
+**Descartado:** `spatie/laravel-permission`, que es excesivo para dos roles
+fijos.
+
+**Fondos: una biblioteca de imágenes (`backgrounds`) más una referencia
+opcional en cada diapositiva (`slides.background_id`).**
+- Los fondos habilitados ("en la rotación general") rotan detrás de todo con
+  su propio intervalo, independiente de las diapositivas.
+- Una diapositiva con fondo propio lo muestra mientras está al aire, esté o
+  no ese fondo en la rotación.
+- Al reemplazar o borrar una imagen se elimina el archivo anterior (eventos
+  del modelo). Por eso en fondos no hay borrado masivo.
+- En la pantalla, cada fondo nuevo se precarga antes de mostrarse: una imagen
+  rota o lenta nunca reemplaza a la que está al aire. Luego aparece con un
+  fundido sobre el anterior, y nunca hay más de dos capas en el DOM. Encima va
+  una capa oscura con degradado que mantiene el contraste del texto.
+- Las imágenes van en el disco `public`, así que cada instalación necesita
+  `php artisan storage:link`.
+
+**Convenciones del panel:**
+- Los recursos son de tipo *simple* (una página, edición en modales), y las
+  listas se ordenan arrastrando filas (`sort_order`). Los registros nuevos
+  quedan al final (trait `HasDisplayOrder`).
+- Todos los textos están en `lang/{es,en}/admin.php`, y los títulos llevan
+  mayúscula solo al inicio, como corresponde en español (trait
+  `HasSentenceCaseLabels`).
+- Cada tipo de diapositiva declara sus propios campos de ajustes
+  (`SlideType::settingsFields()`). Un tipo nuevo trae su formulario sin tocar
+  el recurso.
+- El pie del panel enlaza al código fuente (`HUIFAX_SOURCE_URL`), como exige
+  la AGPL (§13). El menú incluye "Ver pantalla".
+
 ## Pendientes
 
 - **Radio:** la URL del stream está por llegar. Debe ser configurable desde el

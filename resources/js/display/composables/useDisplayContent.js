@@ -16,7 +16,7 @@ import { normalizePayload } from '../lib/payload.js';
  * @param {Set<string>} options.knownTypes
  */
 export function useDisplayContent({ initial, etag, url, knownTypes }) {
-    const empty = { settings: {}, strings: {}, slides: [] };
+    const empty = { settings: {}, strings: {}, backgrounds: [], slides: [] };
     const content = shallowRef(normalizePayload(initial, knownTypes) ?? empty);
     let pending = null;
 

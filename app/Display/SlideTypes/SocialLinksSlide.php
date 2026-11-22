@@ -6,6 +6,7 @@ use App\Display\SlidePage;
 use App\Models\Slide;
 use App\Models\SocialLink;
 use Carbon\CarbonImmutable;
+use Filament\Forms\Components\TextInput;
 
 class SocialLinksSlide extends SlideType
 {
@@ -19,6 +20,20 @@ class SocialLinksSlide extends SlideType
     public function defaultDuration(): int
     {
         return 15;
+    }
+
+    public function settingsFields(): array
+    {
+        return [
+            ...parent::settingsFields(),
+            TextInput::make('settings.per_page')
+                ->label(__('admin.slides.fields.per_page'))
+                ->helperText(__('admin.slides.help.per_page'))
+                ->integer()
+                ->minValue(1)
+                ->maxValue(12)
+                ->placeholder((string) self::DEFAULT_PER_PAGE),
+        ];
     }
 
     public function pages(Slide $slide, CarbonImmutable $now): array

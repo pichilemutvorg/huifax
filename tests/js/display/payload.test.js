@@ -42,4 +42,22 @@ describe('normalizePayload', () => {
     it('defaults missing strings to an empty object', () => {
         expect(normalizePayload({ settings: {}, slides: [] }, known).strings).toEqual({});
     });
+
+    it('keeps valid backgrounds and normalizes slide backgrounds', () => {
+        const result = normalizePayload(
+            {
+                settings: {},
+                backgrounds: [{ id: 1, url: '/a.jpg' }, { id: 2 }, { id: 3, url: '' }, null],
+                slides: [slide({ id: 'with', background: '/own.jpg' }), slide({ id: 'without', background: 42 })],
+            },
+            known,
+        );
+
+        expect(result.backgrounds).toEqual([{ id: 1, url: '/a.jpg' }]);
+        expect(result.slides.map((s) => s.background)).toEqual(['/own.jpg', null]);
+    });
+
+    it('defaults missing backgrounds to an empty list', () => {
+        expect(normalizePayload({ settings: {}, slides: [] }, known).backgrounds).toEqual([]);
+    });
 });

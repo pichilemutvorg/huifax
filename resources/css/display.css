@@ -72,3 +72,14 @@ body,
         transform: translateY(1.5rem);
     }
 }
+
+/* Background photos cross-fade: the new one fades in over the previous. */
+.background-enter {
+    animation: background-enter 1500ms ease-in-out;
+}
+
+@keyframes background-enter {
+    from {
+        opacity: 0;
+    }
+}

@@ -34,6 +34,19 @@ class Notice extends Model
     }
 
     /**
+     * Publication status at the given moment: active, scheduled, expired or disabled.
+     */
+    public function statusAt(DateTimeInterface $moment): string
+    {
+        return match (true) {
+            ! $this->is_enabled => 'disabled',
+            $this->starts_at !== null && $this->starts_at > $moment => 'scheduled',
+            $this->ends_at !== null && $this->ends_at <= $moment => 'expired',
+            default => 'active',
+        };
+    }
+
+    /**
      * Notices whose publication window includes the given moment.
      * A missing start or end leaves that side of the window open.
      */

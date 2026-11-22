@@ -20,7 +20,6 @@ class DisplayApiTest extends TestCase
         config([
             'huifax.display.locale' => 'es-CL',
             'app.timezone' => 'America/Santiago',
-            'huifax.display.poll_interval' => 30,
         ]);
 
         $this->getJson(route('api.display'))
