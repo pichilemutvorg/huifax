@@ -25,15 +25,18 @@ Requisitos: PHP ≥ 8.4 con `pdo_sqlite` e `intl`, Composer y Node.
 composer setup                   # instala dependencias, crea .env, migra y compila
 composer dev                     # servidor + Vite en modo desarrollo
 php artisan make:filament-user   # crea un usuario para /admin
+php artisan db:seed --class=DemoContentSeeder   # contenido de ejemplo (solo desarrollo)
 ```
 
 - Pantalla al aire: `/`
 - Panel de administración: `/admin`
 
-La configuración de la instancia (zona horaria, locale, título) está en `.env`;
+La configuración de la instancia (zona horaria, locale, título, logo, intervalo
+de consulta, hora de recarga diaria) está en `.env`;
 ver `.env.example` y `config/huifax.php`.
 
-Antes de un commit: `composer lint`, `npm run format` y `php artisan test`.
+Antes de un commit: `composer lint`, `npm run format`, `php artisan test` y
+`npm test`.
 Para contribuir, lee [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licencia

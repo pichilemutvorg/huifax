@@ -83,18 +83,28 @@ sin framework (es más trabajo mantener los componentes de diapositivas a mano).
 La pantalla refleja los cambios del panel **sin recargar la página** y **sin
 alterar la diapositiva que está al aire**.
 
-- **Detección:** la pantalla consulta cada 30 s (valor configurable) un
-  endpoint JSON sin sesión (`GET /api/display`). Ese endpoint responde con un
-  `ETag` calculado desde la versión del contenido; si no hubo cambios, devuelve
-  `304` sin cuerpo. Toda escritura en el panel incrementa la versión.
+- **Detección:** la pantalla consulta cada 30 s (`HUIFAX_POLL_INTERVAL`) el
+  endpoint JSON sin sesión `GET /api/display`. Su `ETag` es el hash del
+  contenido serializado; si no cambió, responde `304` sin cuerpo. No hay un
+  contador de versión: cualquier cambio (incluido que un aviso entre o salga
+  de su vigencia) cambia el hash sin tener que acordarse de incrementar nada.
+  Por eso el payload no puede incluir valores que cambien en cada petición,
+  como marcas de tiempo.
 - **Aplicación:** si llega contenido nuevo, la pantalla lo guarda como
-  *pendiente* (y en `localStorage`). La diapositiva actual termina su duración
-  con los datos con que empezó; al pasar a la siguiente, el contenido
-  pendiente reemplaza al vigente. Si la diapositiva actual fue eliminada o
-  deshabilitada, igual termina su tiempo.
+  *pendiente*. La diapositiva actual termina su duración con los datos con
+  que empezó; al pasar a la siguiente, el contenido pendiente reemplaza al
+  vigente y la rotación sigue desde la misma posición. Si la diapositiva
+  actual fue eliminada, igual termina su tiempo.
 - **Sin conexión:** si el endpoint falla, se sigue con el contenido vigente y
-  se reintenta con backoff. Al arrancar sin conexión se usa la copia de
-  `localStorage`.
+  se reintenta con backoff exponencial (hasta 5 min). El primer contenido va
+  embebido en la página, así que la pantalla no espera a la API para mostrar
+  el primer cuadro.
+- **Arranque sin servidor:** si el servidor no responde cuando la página se
+  carga, el navegador no tiene nada que mostrar. `localStorage` no resuelve
+  esto (sin la página no hay JavaScript), así que se descartó. La solución es
+  un Service Worker que sirva la página y el último contenido desde caché;
+  queda para la Fase 4. Mientras tanto, la recarga diaria solo ocurre si
+  `/up` responde.
 
 **Por qué polling:** una demora de hasta 30 s es irrelevante para este
 contenido, y el polling no necesita procesos extra en el servidor. Con
@@ -256,6 +266,59 @@ aunque el scaffold de Laravel 13 trae la 12. El CI pasó con PHP 8.4 y 8.5.
 Se prefiere estar en la versión mayor vigente a quedar atrás desde el inicio.
 Si alguna integración de Laravel falla con PHPUnit 13, se vuelve a la 12 y se
 registra aquí.
+
+### 2026-11-22 — Arquitectura de la pantalla al aire (Fase 1)
+
+**Modelo de datos.** Una tabla `slides` (tipo, nombre, orden, duración,
+habilitada, `settings` JSON) define la rotación. El contenido en listas vive en
+tablas propias: `emergency_contacts`, `social_links` y `notices`. Todas usan
+`is_enabled` y `sort_order` (trait `HasDisplayOrder`). Puede haber varias
+diapositivas del mismo tipo, cada una con sus ajustes (p. ej. `heading` o
+`per_page`).
+
+**Tipos de diapositiva.** Cada tipo es una clase que extiende
+`App\Display\SlideTypes\SlideType` (`key()`, `defaultDuration()`, `pages()`),
+registrada en `config/huifax.php`, más un componente Vue con la misma clave en
+`resources/js/display/slides/index.js`. Una diapositiva produce cero o más
+*páginas*: cero significa "no disponible ahora" y se salta; los avisos producen
+una página por aviso vigente y las listas largas se dividen en páginas. La
+duración se resuelve en este orden: página → diapositiva → valor por defecto
+del tipo. Si un tipo lanza una excepción, se reporta y se omite; el resto de la
+pantalla sigue.
+
+**Textos traducidos.** Se resuelven en el servidor. Los encabezados de las
+diapositivas viajan ya traducidos dentro de sus datos, y los pocos textos
+propios de la interfaz de la pantalla van en `strings` (`lang/*/display.php`,
+clave `ui`). Así la app Vue no necesita una librería de i18n, y un cambio de
+idioma se aplica en vivo como cualquier otro contenido.
+
+**Robustez en el navegador.**
+- Las transiciones usan una animación CSS de entrada (`@keyframes`) al montar
+  cada diapositiva, no `<Transition>` de Vue. Al probar en Chromium headless,
+  `<Transition>` dejó diapositivas ocultas cuando no llegaban cuadros de
+  animación ni eventos `transitionend`. Una animación CSS no depende de
+  JavaScript ni de eventos para terminar.
+- Una diapositiva que falla al renderizarse se salta (`onErrorCaptured`) y no
+  vuelve a mostrarse hasta que cambie el contenido. Sin diapositivas
+  disponibles se muestra una pantalla de reposo con el título o el logo.
+- Recarga diaria de seguridad (`HUIFAX_RELOAD_AT`, por defecto 05:00 en la zona
+  de la instancia), solo si `/up` responde y la página lleva más de una hora
+  cargada.
+- Lienzo fijo de 1920×1080 escalado a la ventana con `transform: scale`, con
+  márgenes de zona segura (96 px horizontales, 56 px verticales).
+
+**Dependencias nuevas:**
+- `simple-icons` (CC0-1.0): íconos de marcas para las redes sociales. Solo se
+  empaquetan los íconos importados.
+- `vitest` (MIT, solo desarrollo): pruebas de la lógica de la pantalla
+  (rotación, validación del payload, polling con backoff, recarga). Corre en
+  el job de pruebas del CI.
+
+**Diseño base.** Tema daisyUI propio `huifax`: fondo azul profundo, títulos en
+turquesa (`primary`) y cifras destacadas en amarillo arena (`accent`), alto
+contraste y bordes redondeados. Tipografía del sistema por ahora. Es un punto
+de partida para iterar; la personalización por instancia vendrá desde el
+panel.
 
 ## Pendientes
 

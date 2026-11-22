@@ -36,6 +36,7 @@ Para cambios grandes, abre primero un issue para conversarlo.
     composer lint
     npm run format
     php artisan test
+    npm test
     ```
 
 3. Abre el pull request contra `main`, describiendo qué cambia y por qué. Si

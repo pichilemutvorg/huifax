@@ -40,7 +40,7 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
                  ▲ HTTPS
 ┌────────────────┴──── CasparCG 2.4 (CEF) ────────────────────┐
 │ Pantalla 1920×1080 en Vue 3: carrusel, reloj, polling cada  │
-│ 30 s, cambios aplicados entre diapositivas, localStorage,   │
+│ 30 s, cambios aplicados entre diapositivas, backoff,        │
 │ recarga diaria de seguridad, audio opcional                 │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -53,14 +53,14 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
   conserva el anterior junto a la fecha en que se obtuvo. La pantalla nunca
   espera a una fuente externa.
 - **Diapositivas como módulos.** En el backend, cada tipo de diapositiva es
-  una clase con la misma interfaz (`isAvailable()`, `data()`, `duration()`).
-  En la pantalla, cada tipo es un componente Vue registrado por nombre de tipo. Agregar un tipo
+  una clase con la misma interfaz (`key()`, `defaultDuration()`, `pages()`).
+  En la pantalla, cada tipo es un componente Vue registrado con la misma clave. Agregar un tipo
   nuevo no obliga a tocar los demás.
 - **Cambios en vivo sin cortar la diapositiva.** El contenido nuevo queda
   pendiente y reemplaza al vigente en la siguiente transición.
-- **Pantalla tolerante a fallos.** Si `/api/display` falla, la pantalla usa la
-  copia en `localStorage`. Si una diapositiva lanza una excepción al
-  renderizarse, se salta y el carrusel sigue.
+- **Pantalla tolerante a fallos.** Si `/api/display` falla, la pantalla sigue
+  con el contenido que tiene y reintenta con backoff. Si una diapositiva lanza
+  una excepción al renderizarse, se salta y la rotación continúa.
 
 ## Fases
 
@@ -80,19 +80,22 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 - [x] CI (GitHub Actions), Dependabot y `CONTRIBUTING.md`.
 - [x] Publicar en `pichilemutvorg/huifax` y proteger `main` (ruleset).
 
-### Fase 1 — Pantalla al aire mínima (contenido estático)
+### Fase 1 — Pantalla al aire
 
-- [ ] Layout fijo de 1920×1080 escalado a 16:9, con zonas seguras del 5 %.
-- [ ] Encabezado: logo y fecha/hora en `America/Santiago`, formato `es-CL`
-      (`Intl.DateTimeFormat`, sin moment).
-- [ ] Fondo con fotografías que rotan.
-- [ ] Motor de carrusel: duración por diapositiva, transición suave, tolerante
-      a errores.
-- [ ] Diapositivas con datos del panel: Emergencias, Redes, Avisos.
-- [ ] Endpoint `/api/display` con ETag/304 y versión de contenido.
-- [ ] Polling, contenido pendiente aplicado entre diapositivas y caché en
-      `localStorage`.
-- [ ] Recarga programada diaria (hora configurable).
+- [x] Lienzo fijo de 1920×1080 escalado a 16:9, con zonas seguras.
+- [x] Encabezado: título o logo, y fecha/hora con la zona y el locale de la
+      instancia (`Intl.DateTimeFormat`).
+- [x] Motor de rotación tolerante a errores, con duración por diapositiva y
+      animación de entrada en CSS.
+- [x] Modelo de datos y tipos de diapositiva: Emergencias, Redes y Avisos (un
+      aviso por diapositiva, con vigencia).
+- [x] Endpoint `/api/display` con ETag/304.
+- [x] Polling con backoff y cambios aplicados entre diapositivas.
+- [x] Recarga diaria programada, condicionada a que el servidor responda.
+- [x] Seeder de contenido de ejemplo y pruebas (PHPUnit y Vitest).
+- [ ] Fondo con fotografías que rotan (requiere subir imágenes desde el
+      panel; pasa a la Fase 2).
+- [ ] Revisión visual en CasparCG real.
 
 ### Fase 2 — Panel de administración
 
@@ -100,7 +103,8 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 - [ ] Enlace al código fuente en el panel, con URL configurable (AGPL §13).
 - [ ] Recursos: Avisos (con vigencia desde/hasta), Números de emergencia,
       Redes sociales, Diapositivas (orden, duración, habilitada), Fondos
-      (subida de imágenes), Configuración general (audio, hora de recarga).
+      (subida de imágenes, con su rotación en la pantalla), Configuración
+      general (marca, logo, audio, intervalo de consulta, hora de recarga).
 
 ### Fase 3 — Fuentes externas
 
@@ -115,6 +119,8 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 - [ ] Reproductor de radio opcional en la página, con reconexión y backoff
       (desactivado por defecto: el audio sale de CasparCG). URL configurable en el
       panel.
+- [ ] Service Worker: servir la página y el último contenido desde caché si
+      el servidor no responde al arrancar.
 - [ ] Prueba de varias horas en CasparCG midiendo la memoria.
 - [ ] Monitoreo básico: endpoint de salud y estado de cada fuente en el panel.
 
