@@ -151,8 +151,9 @@ Versiones instaladas al crear el proyecto (verificadas como compatibles):
 - **Formateo y lint:** Pint con el preset `laravel` (`composer lint`,
   `composer lint:check`) y Prettier con los plugins de Blade y Tailwind
   (`npm run format`, `npm run format:check`).
-- **Pruebas:** PHPUnit 12, que es el que trae Laravel. Pest queda descartado
-  por ahora para no sumar dependencias.
+- **Pruebas:** PHPUnit (Laravel trae la 12; se actualizó a la 13, ver la
+  entrada del 2026-11-22). Pest queda descartado por ahora para no sumar
+  dependencias.
 - **Descartado:** el `CLAUDE.md`/`AGENTS.md` genérico del scaffold, que pide
   instalar Laravel Boost. Si se quiere Boost, se decide aparte.
 
@@ -226,9 +227,35 @@ la organización de PichilemuTV.org.
 - **Por ser público:** ninguna clave, credencial, IP interna ni dato del
   despliegue (CT, dominios internos) se sube al repositorio. Lo propio del
   despliegue de PichilemuTV va en su `.env`, fuera de git.
-- **Pendiente:** activar la protección de la rama `main` (exigir que el CI
-  pase y que los cambios entren por pull request), y decidir si se agrega
-  `SECURITY.md` (canal privado para reportar vulnerabilidades).
+- **Pendiente:** decidir si se agrega `SECURITY.md` (canal privado para
+  reportar vulnerabilidades).
+
+### 2026-11-22 — Protección de `main` y flujo de pull requests
+
+`main` está protegida con un ruleset de GitHub (no con la protección de ramas
+clásica):
+
+- No se puede borrar ni recibir force push.
+- Todo cambio entra por pull request, con 0 aprobaciones requeridas mientras
+  haya un solo mantenedor (subirlo cuando haya más personas revisando). Las
+  aprobaciones se invalidan con commits nuevos, y las conversaciones deben
+  quedar resueltas antes de fusionar.
+- Para fusionar deben pasar los checks `Lint and format`, `Tests (PHP 8.4)` y
+  `Tests (PHP 8.5)`, con la rama al día respecto de `main`.
+- Solo se permite *squash merge* (un commit por PR) y las ramas se borran al
+  fusionar.
+
+**Importante:** si se renombran los jobs de `ci.yml` o cambia la matriz de
+PHP, hay que actualizar los checks requeridos del ruleset; si no, los PR
+quedan esperando un check que nunca llega.
+
+### 2026-11-22 — PHPUnit 13
+
+Se aceptó el PR #1 de Dependabot, que actualiza PHPUnit de 12.5 a 13.4,
+aunque el scaffold de Laravel 13 trae la 12. El CI pasó con PHP 8.4 y 8.5.
+Se prefiere estar en la versión mayor vigente a quedar atrás desde el inicio.
+Si alguna integración de Laravel falla con PHPUnit 13, se vuelve a la 12 y se
+registra aquí.
 
 ## Pendientes
 

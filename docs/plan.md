@@ -76,9 +76,9 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
       `lang/en`.
 - [x] `.env.example` sin secretos.
 - [x] Licencia AGPL-3.0-or-later (`LICENSE`).
-- [ ] Primer commit.
+- [x] Primer commit.
 - [x] CI (GitHub Actions), Dependabot y `CONTRIBUTING.md`.
-- [ ] Crear `pichilemutvorg/huifax` en GitHub, publicar y proteger `main`.
+- [x] Publicar en `pichilemutvorg/huifax` y proteger `main` (ruleset).
 
 ### Fase 1 — Pantalla al aire mínima (contenido estático)
 
