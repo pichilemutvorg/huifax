@@ -4,6 +4,7 @@ import SlideHeading from './SlideHeading.vue';
 defineProps({
     data: { type: Object, required: true },
     strings: { type: Object, required: true },
+    settings: { type: Object, default: () => ({}) },
 });
 </script>
 
