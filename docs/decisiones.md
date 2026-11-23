@@ -128,8 +128,8 @@ ser necesario.
 La grilla de programación se administra desde el panel. No se usa Google
 Calendar ni ninguna clave de Google.
 
-- **Pendiente:** diseñar el modelo de datos (programas, horarios recurrentes,
-  excepciones). No entra en la primera ronda.
+- **Actualización:** HUIFAX no administra la grilla; ver "HUIFAX no administra
+  la grilla de programación".
 
 ### 2026-11-21 — Versiones y herramientas de la base (Fase 0)
 
@@ -428,6 +428,73 @@ Fixture real recortado en `tests/Fixtures/meteochile/`.
 
 **Pruebas:** `Http::preventStrayRequests()` en el `TestCase` base, para que
 ninguna prueba salga a la red.
+
+### 2026-11-22 — Subidas y optimización de fotografías
+
+**Problema:** las subidas fallaban con fotos de más de 2 MB. PHP traía
+`upload_max_filesize = 2M` y `post_max_size = 8M`, mientras que el panel
+prometía hasta 8 MB, y Livewire valida aparte sus subidas temporales (12 MB
+por defecto).
+
+**Solución:**
+- Un solo límite: `huifax.uploads.max_size` (`HUIFAX_UPLOAD_MAX_SIZE`, 20 MB
+  por defecto). Lo usan los campos de foto y la validación de Livewire.
+- `public/.user.ini` sube los límites de PHP (24 MB por archivo, 32 MB por
+  petición). Lo leen PHP-FPM y CGI, y queda versionado con el código. El
+  servidor web también debe aceptar el tamaño (`client_max_body_size` en
+  nginx); eso va en el despliegue.
+
+**Optimización:** el campo `PhotoUpload` guarda una copia optimizada en vez
+del original (`App\Media\PhotoOptimizer`, con intervention/image 4):
+- La foto se reduce (nunca se agranda) hasta cubrir justo 1920×1080, sin
+  cambiar su proporción. La pantalla la recorta con `object-cover`.
+- Se guarda en WebP con calidad 82 (`HUIFAX_PHOTO_QUALITY`), que no muestra
+  pérdida visible a 1080p. WebP lo soporta el CEF de CasparCG (Chromium 110).
+- Se aplica la orientación EXIF y se eliminan los metadatos, incluida la
+  ubicación GPS de las fotos de teléfono.
+- Usa Imagick si está disponible y, si no, GD. Para GD sube el
+  `memory_limit` a 512 MB mientras procesa, porque decodificar una foto de
+  24 MP ocupa unos 100 MB.
+- Los logos no se tocan: son PNG o SVG con transparencia y pesan poco.
+
+Los fondos subidos antes de este cambio quedan tal cual.
+
+### 2026-11-22 — Herramientas de revisión en la pantalla
+
+- Las **flechas del teclado** pasan a la diapositiva siguiente (→ o ↓) o a la
+  anterior (← o ↑). La diapositiva elegida dura su tiempo completo, y el
+  contenido pendiente se aplica igual que en una transición normal.
+- La tecla **`G`** muestra u oculta las áreas seguras (SMPTE ST 2046-1):
+  *action safe* 93 % y *title safe* 90 %, más una cruz central. Con `/?guides`
+  aparecen desde el inicio. Los márgenes del contenido coinciden con el
+  *title safe*.
+- Están siempre activas, sin necesidad de un modo de depuración: al aire
+  nadie tiene teclado, así que no interfieren con la rotación.
+
+### 2026-11-22 — HUIFAX no administra la grilla de programación
+
+Se implementó una grilla propia (programas, horarios semanales con temporada,
+cancelaciones y traslados puntuales, y emisiones especiales). Quedó en la rama
+`feature/schedule` como referencia, sin combinar.
+
+**Por qué se descartó:**
+- La programación pertenece a un sistema de planificación dedicado (la
+  versión completa de *overtime*, o el generador de grillas para RedCast
+  OnTime mientras tanto).
+- Mantenerla también en HUIFAX duplicaría la carga de datos, y tarde o
+  temprano las dos versiones dejarían de coincidir.
+- Para quien la edita, el modelo resultó enrevesado.
+
+**En su lugar:**
+- **Programas destacados:** anuncios tipo *billboard* de los programas
+  insignia, con imagen, nombre, frase, horario en texto libre y vigencia
+  opcional. Es contenido promocional y editorial.
+- **Grilla externa, más adelante:** cuando exista el sistema de
+  planificación, HUIFAX leerá la grilla de un feed externo, con un proveedor
+  intercambiable como el del clima. El contrato (JSON o iCalendar) se define
+  junto con ese sistema. La forma en que la rama de referencia envía cada
+  emisión puede servir de punto de partida: programa, descripción, inicio y
+  fin en ISO 8601 con desfase, y etiqueta.
 
 ## Pendientes
 

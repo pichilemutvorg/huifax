@@ -114,9 +114,9 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
       (respuesta real, vacía, malformada, HTTP de error y sin red), último dato
       válido, íconos locales, diapositiva con hoy y los cuatro días siguientes,
       y cita de la fuente.
-- [ ] Programación: diseñar el modelo (programas, horarios recurrentes,
-      excepciones), su recurso en el panel y su diapositiva. Sin Google
-      Calendar.
+- [ ] Programas destacados: anuncios de los programas insignia (imagen,
+      nombre, frase, horario en texto libre, vigencia). La grilla completa
+      vendrá de un sistema de planificación externo (ver decisiones).
 
 ### Fase 4 — Audio y robustez
 
@@ -130,5 +130,6 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 
 ### Fase 5 — Despliegue
 
-- [ ] Preparar el CT (servidor web, PHP, BD, cron de `schedule:run`, HTTPS).
+- [ ] Preparar el CT (servidor web, PHP, BD, cron de `schedule:run`, HTTPS,
+      límites de subida: `client_max_body_size` y `public/.user.ini`).
 - [ ] Script de despliegue y documentación de operación.

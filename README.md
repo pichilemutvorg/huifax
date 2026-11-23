@@ -19,7 +19,8 @@ La documentación (en español) está en [docs/](docs/README.md).
 
 ## Desarrollo
 
-Requisitos: PHP ≥ 8.4 con `pdo_sqlite` e `intl`, Composer y Node.
+Requisitos: PHP ≥ 8.4 con `pdo_sqlite`, `intl` y `gd` (o `imagick`), Composer y
+Node.
 
 ```sh
 composer setup                   # instala dependencias, crea .env, migra y compila
@@ -38,8 +39,17 @@ Laravel. Hay que agregar al cron del servidor:
 * * * * * cd /ruta/a/huifax && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-- Pantalla al aire: `/`
+- Pantalla al aire: `/` (con `/?guides` muestra las áreas seguras)
 - Panel de administración: `/admin`
+
+En la pantalla, las flechas del teclado pasan a la diapositiva siguiente o a la
+anterior, y la tecla `G` muestra u oculta las áreas seguras (*action safe* 93 %
+y *title safe* 90 %).
+
+Las subidas aceptan hasta 20 MB (`HUIFAX_UPLOAD_MAX_SIZE`, en KB). PHP debe
+aceptar al menos eso: `public/.user.ini` lo ajusta para PHP-FPM, y el servidor
+web también debe permitirlo (por ejemplo, `client_max_body_size 32m;` en
+nginx). Las fotografías se guardan optimizadas en WebP.
 
 La zona horaria y el locale de la instancia se configuran en `.env` (ver
 `.env.example` y `config/huifax.php`). La marca, los intervalos, la recarga
