@@ -26,3 +26,10 @@ app.config.errorHandler = (error, instance, info) => {
 };
 
 app.mount(root);
+
+// Lets the display start from its last good copy when the server is down.
+if ('serviceWorker' in navigator && root.dataset.serviceWorkerUrl) {
+    navigator.serviceWorker.register(root.dataset.serviceWorkerUrl).catch((error) => {
+        console.warn('[display] Service worker not registered', error);
+    });
+}

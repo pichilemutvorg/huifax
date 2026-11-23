@@ -93,7 +93,7 @@ class WeatherUpdater
      *
      * @return list<string>
      */
-    private function locations(): array
+    public function locations(): array
     {
         return Slide::query()
             ->where('type', WeatherSlide::KEY)

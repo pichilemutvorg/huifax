@@ -21,6 +21,19 @@ return [
         'source_code' => 'Source code',
     ],
 
+    'status' => [
+        'heading' => 'Status',
+        'display' => 'Display',
+        'connected' => 'Connected',
+        'disconnected' => 'Disconnected',
+        'last_seen' => 'Last request :time',
+        'never_seen' => 'Has not connected yet',
+        'weather' => 'Weather · :location',
+        'updated' => 'Updated :time',
+        'no_data' => 'No data',
+        'weather_help' => 'Refreshed every 30 minutes by the scheduler',
+    ],
+
     'notices' => [
         'label' => 'notice',
         'plural' => 'notices',
@@ -177,6 +190,7 @@ return [
             ],
             'help' => [
                 'enabled' => 'Audio is usually played by the playout system (e.g. CasparCG). Only enable this if the display must play it.',
+                'stream_url' => 'Use https when available: on an HTTPS site, an http stream may be blocked.',
             ],
         ],
     ],

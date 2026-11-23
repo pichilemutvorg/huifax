@@ -120,13 +120,13 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
 
 ### Fase 4 — Audio y robustez
 
-- [ ] Reproductor de radio opcional en la página, con reconexión y backoff
+- [x] Reproductor de radio opcional en la página, con reconexión y backoff
       (desactivado por defecto: el audio sale de CasparCG). URL configurable en el
       panel.
-- [ ] Service Worker: servir la página y el último contenido desde caché si
+- [x] Service Worker: servir la página y el último contenido desde caché si
       el servidor no responde al arrancar.
 - [ ] Prueba de varias horas en CasparCG midiendo la memoria.
-- [ ] Monitoreo básico: endpoint de salud y estado de cada fuente en el panel.
+- [x] Monitoreo básico: endpoint de salud y estado de cada fuente en el panel.
 
 ### Fase 5 — Despliegue
 

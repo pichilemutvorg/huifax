@@ -10,8 +10,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "format": "prettier --write resources/ tests/js/",
-        "format:check": "prettier --check resources/ tests/js/",
+        "format": "prettier --write resources/ tests/js/ public/sw.js",
+        "format:check": "prettier --check resources/ tests/js/ public/sw.js",
         "test": "vitest run",
         "test:watch": "vitest"
     },

@@ -9,6 +9,7 @@ import SlideCarousel from './components/SlideCarousel.vue';
 import { useBackground } from './composables/useBackground.js';
 import { useDisplayContent } from './composables/useDisplayContent.js';
 import { useKeyboardControls } from './composables/useKeyboardControls.js';
+import { useRadio } from './composables/useRadio.js';
 import { useRotation } from './composables/useRotation.js';
 import { useScheduledReload } from './composables/useScheduledReload.js';
 import { slideComponents } from './slides/index.js';
@@ -37,6 +38,8 @@ const showGuides = ref(props.guides);
 
 useKeyboardControls({ next, previous, toggleGuides: () => (showGuides.value = !showGuides.value) });
 const { url: backgroundUrl } = useBackground(content, current);
+
+useRadio(() => settings.value.audio);
 
 useScheduledReload(
     () => settings.value.reload_at,

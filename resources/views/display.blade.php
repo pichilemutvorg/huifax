@@ -16,6 +16,7 @@
         id="display"
         data-api-url="{{ route('api.display') }}"
         data-health-url="{{ url('/up') }}"
+        data-service-worker-url="{{ asset('sw.js') }}"
         data-etag="{{ $etag }}"
     ></div>
     <script type="application/json" id="display-payload">

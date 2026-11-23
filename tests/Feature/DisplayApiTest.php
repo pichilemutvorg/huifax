@@ -8,6 +8,7 @@ use App\Models\EmergencyContact;
 use App\Models\Notice;
 use App\Models\Slide;
 use App\Models\SocialLink;
+use App\Settings\AudioSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -134,5 +135,18 @@ class DisplayApiTest extends TestCase
     public function test_the_api_does_not_start_a_session(): void
     {
         $this->getJson(route('api.display'))->assertCookieMissing(config('session.cookie'));
+    }
+
+    public function test_the_payload_carries_the_audio_settings(): void
+    {
+        $audio = app(AudioSettings::class);
+        $audio->enabled = true;
+        $audio->stream_url = 'https://radio.example/stream';
+        $audio->volume = 70;
+        $audio->save();
+
+        $this->getJson('/api/display')
+            ->assertOk()
+            ->assertJsonPath('settings.audio', ['enabled' => true, 'stream_url' => 'https://radio.example/stream', 'volume' => 70]);
     }
 }
