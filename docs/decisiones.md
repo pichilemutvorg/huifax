@@ -522,13 +522,66 @@ al trait `HasPublicationWindow`, que usan los avisos y los destacados. La
 limpieza de archivos reemplazados o borrados pasó a `HasStoredImage`, que
 usan los fondos y los destacados.
 
+### 2026-11-23 — Audio, arranque sin conexión y monitoreo (Fase 4)
+
+**Radio en la página** (`lib/radio.js`, desactivada por defecto):
+- Se activa y configura en *Configuración → Audio* (URL, volumen) y llega a
+  la pantalla con el resto de los ajustes.
+- Se reconecta sola con espera creciente (2, 4, 8… hasta 60 s) si el stream
+  da error, termina o se congela. Para detectar que se congeló, revisa cada
+  10 s que la reproducción avance. Un `play()` rechazado, por ejemplo por la
+  política de autoplay, también se reintenta.
+- Al reconectar suelta la conexión y sus buffers, para no acumular memoria.
+- La URL conviene que sea https: en un sitio HTTPS, un stream http puede
+  quedar bloqueado como contenido mixto.
+
+**Verificado en CasparCG 2.5.1 (CEF 142.0.7444.176) en este equipo:**
+- La pantalla se ve correctamente a 1920×1080 en la salida real del canal.
+- El autoplay funciona en CEF: el stream FLAC/Ogg se reproduce sin gesto del
+  usuario.
+- **Pero el audio del productor HTML no llega al canal:** la salida queda en
+  silencio (−91 dB), incluso con una página mínima que solo reproduce un
+  tono. Un archivo o el mismo stream reproducido por el productor FFmpeg de
+  CasparCG sí se escuchan.
+- **Configuración recomendada para CasparCG:** el stream en una capa propia
+  del productor FFmpeg (`PLAY 1-5 "https://…"`) y HUIFAX en una capa
+  superior, con la radio de la página desactivada. La radio de la página
+  queda para otros sistemas de captura, como OBS o un navegador a pantalla
+  completa.
+- Con la configuración por defecto, un proceso auxiliar de CEF
+  (`unzip.mojom.Unzipper`) se cae una y otra vez ("stack smashing
+  detected"). No afecta a la pantalla, pero genera volcados de memoria. Es
+  un tema del paquete de CasparCG/CEF.
+
+**Service Worker** (`public/sw.js`), para que la pantalla arranque y siga
+funcionando aunque el servidor no responda:
+- La página y `api/display` se piden primero a la red, con un tiempo límite
+  de 8 s. Si falla, se usa la última copia buena.
+- Los archivos del build y las imágenes (subidas e íconos del clima) se
+  sirven desde la caché.
+- Al llegar contenido nuevo, descarga todas las imágenes que usa y borra las
+  que ya no. Con el build hace lo mismo, a partir de `build/manifest.json`.
+- El panel de administración y `/up` no pasan por la caché.
+- **Requiere un contexto seguro:** HTTPS o `localhost`. Sobre http, el
+  navegador (y CEF en CasparCG) no lo activa, y la pantalla funciona igual,
+  pero sin arranque sin conexión. Por eso el despliegue debe usar HTTPS con
+  un certificado que CEF acepte (por ejemplo, Let's Encrypt).
+- Verificado en Chromium: con la red cortada para la página y el Service
+  Worker, la pantalla vuelve a cargar con todas sus imágenes.
+
+**Monitoreo:**
+- Salud: `/up` (Laravel), para monitores externos.
+- El escritorio del panel muestra si la pantalla está conectada, según su
+  última consulta: se registra al pedir `api/display`, como mucho cada 15 s.
+  Se considera desconectada tras tres consultas perdidas. Muestra también la
+  antigüedad del pronóstico de cada localidad: se marca a las 2 horas, ya
+  que se actualiza cada 30 minutos.
+
 ## Pendientes
 
-- **Radio:** la URL del stream está por llegar. Debe ser configurable desde el
-  panel (URL, activar/desactivar la reproducción en la página, volumen). Por
-  defecto el audio lo reproduce CasparCG.
-- **Diseño de la programación:** ver la entrada correspondiente.
-- **CasparCG:** anotar la versión exacta y la de su CEF.
-- **Despliegue en el CT:** distribución, servidor web, HTTPS y cómo se publica.
+- **Audio HTML en CasparCG:** averiguar si el silencio del productor HTML en
+  2.5.1 para Linux tiene solución (configuración o versión).
+- **Despliegue en el CT:** distribución, servidor web, HTTPS (necesario para el
+  Service Worker) y cómo se publica.
 - **Tipografía y diseño visual** de la pantalla al aire (con colores y
   tipografía personalizables por instancia).

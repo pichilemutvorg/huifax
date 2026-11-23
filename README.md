@@ -46,6 +46,13 @@ En la pantalla, las flechas del teclado pasan a la diapositiva siguiente o a la
 anterior, y la tecla `G` muestra u oculta las áreas seguras (*action safe* 93 %
 y *title safe* 90 %).
 
+La radio de la página está desactivada por defecto. En CasparCG conviene
+reproducir el stream en una capa propia del productor FFmpeg, debajo de HUIFAX:
+el audio del productor HTML no llega al canal en CasparCG 2.5.1 para Linux.
+
+El arranque sin conexión (Service Worker) solo funciona sobre HTTPS o en
+`localhost`.
+
 Las subidas aceptan hasta 20 MB (`HUIFAX_UPLOAD_MAX_SIZE`, en KB). PHP debe
 aceptar al menos eso: `public/.user.ini` lo ajusta para PHP-FPM, y el servidor
 web también debe permitirlo (por ejemplo, `client_max_body_size 32m;` en
