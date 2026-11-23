@@ -125,7 +125,7 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
       panel.
 - [x] Service Worker: servir la página y el último contenido desde caché si
       el servidor no responde al arrancar.
-- [ ] Prueba de varias horas en CasparCG midiendo la memoria.
+- [x] Prueba de varias horas en CasparCG midiendo la memoria.
 - [x] Monitoreo básico: endpoint de salud y estado de cada fuente en el panel.
 
 ### Fase 5 — Despliegue
