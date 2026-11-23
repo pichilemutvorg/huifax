@@ -1,8 +1,10 @@
 <?php
 
+use App\Display\SlideTypes\DailyScheduleSlide;
 use App\Display\SlideTypes\EmergencyContactsSlide;
 use App\Display\SlideTypes\NoticesSlide;
 use App\Display\SlideTypes\SocialLinksSlide;
+use App\Display\SlideTypes\UpcomingProgramsSlide;
 use App\Display\SlideTypes\WeatherSlide;
 use App\Weather\Providers\MeteochileProvider;
 
@@ -47,6 +49,8 @@ return [
         SocialLinksSlide::class,
         NoticesSlide::class,
         WeatherSlide::class,
+        UpcomingProgramsSlide::class,
+        DailyScheduleSlide::class,
     ],
 
     /*

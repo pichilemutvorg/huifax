@@ -128,8 +128,8 @@ ser necesario.
 La grilla de programación se administra desde el panel. No se usa Google
 Calendar ni ninguna clave de Google.
 
-- **Pendiente:** diseñar el modelo de datos (programas, horarios recurrentes,
-  excepciones). No entra en la primera ronda.
+- **Resuelto:** el modelo de datos y las diapositivas se definieron en
+  "Programación (Fase 3)".
 
 ### 2026-11-21 — Versiones y herramientas de la base (Fase 0)
 
@@ -340,7 +340,8 @@ los tipos, la caché y las páginas.
 **Roles: un enum `UserRole` en la columna `users.role`**, sin un paquete de
 permisos. Hay dos roles fijos:
 - **administrador:** todo.
-- **editor:** solo avisos, números de emergencia y redes sociales.
+- **editor:** solo avisos, números de emergencia y redes sociales (y,
+  desde la Fase 3, la programación).
 
 Las restricciones se aplican con policies de Laravel (`SlidePolicy`,
 `BackgroundPolicy`, `UserPolicy`), que Filament respeta, y con `canAccess()`
@@ -429,12 +430,60 @@ Fixture real recortado en `tests/Fixtures/meteochile/`.
 **Pruebas:** `Http::preventStrayRequests()` en el `TestCase` base, para que
 ninguna prueba salga a la red.
 
+### 2026-11-22 — Programación (Fase 3)
+
+**Modelo**, acordado con la mantenedora:
+- `programs`: catálogo, con nombre, descripción corta opcional y habilitado.
+  Un programa deshabilitado no sale en pantalla, con ninguno de sus horarios
+  ni emisiones.
+- `schedule_slots`: horarios semanales. Cada uno tiene programa, días de la
+  semana (ISO, 1 = lunes), hora local de inicio, duración en minutos y
+  etiqueta opcional (`live`, `premiere`, `rerun`). Puede tener también una
+  temporada (`valid_from` / `valid_until`). No hay recurrencias quincenales
+  ni mensuales.
+- `schedule_exceptions`: cambia una emisión concreta de un horario (horario +
+  fecha, única). Sin `rescheduled_to`, la cancela; con valor, la mueve a ese
+  momento, con la misma duración y etiqueta. La fecha debe ser un día en que
+  el horario emite.
+- `special_broadcasts`: emisiones puntuales fuera de la grilla, con
+  programa, fecha y hora, duración y etiqueta.
+
+**Cálculo:** `App\Schedule\ScheduleResolver::between()` expande los
+horarios por fecha de calendario y aplica las excepciones. Suma las
+emisiones movidas hacia el período (vengan de donde vengan) y las
+especiales. Las horas son locales a la zona de la instancia, así que una
+emisión a las 21:00 sigue a las 21:00 después de un cambio de horario. Los
+traslapes no se validan: si dos programas chocan, se muestran ambos.
+
+**Fechas sin hora:** el cast `date` de Laravel guarda `Y-m-d 00:00:00`, lo que
+rompe las comparaciones y la validación de unicidad contra `Y-m-d` en SQLite.
+Las columnas de fecha usan el cast `App\Casts\DateOnly`, que guarda
+`Y-m-d`.
+
+**Dos tipos de diapositiva:**
+- `upcoming_programs` ("Próximamente"): las siguientes N emisiones (6 por
+  defecto, máximo 6), mirando hasta 7 días adelante. El día ("Hoy",
+  "Mañana", "miércoles 25") se escribe solo en la primera emisión de cada
+  día.
+- `daily_schedule` ("Programación"): lo que queda de hoy; si ya no queda
+  nada, todo mañana. Se pagina, con 6 por página por defecto.
+- Las dos se saltan si no hay nada que mostrar, y no incluyen emisiones ya
+  comenzadas: HUIFAX está al aire justamente cuando no hay programación.
+
+**Horas en la pantalla:** el servidor envía las horas en ISO 8601 con
+desfase, y la pantalla las formatea en la zona de la instancia (nunca la del
+equipo). "Próximamente" recibe 3 emisiones de reserva. Así, si una comienza
+mientras la pantalla espera contenido nuevo (o sin conexión), la quita y
+la lista sigue completa.
+
+**Permisos:** la programación es contenido, así que la administran también
+los editores.
+
 ## Pendientes
 
 - **Radio:** la URL del stream está por llegar. Debe ser configurable desde el
   panel (URL, activar/desactivar la reproducción en la página, volumen). Por
   defecto el audio lo reproduce CasparCG.
-- **Diseño de la programación:** ver la entrada correspondiente.
 - **CasparCG:** anotar la versión exacta y la de su CEF.
 - **Despliegue en el CT:** distribución, servidor web, HTTPS y cómo se publica.
 - **Tipografía y diseño visual** de la pantalla al aire (con colores y

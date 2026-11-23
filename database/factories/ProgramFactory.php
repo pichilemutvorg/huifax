@@ -1,0 +1,31 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Program;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Program>
+ */
+class ProgramFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->words(3, true),
+            'description' => fake()->sentence(6),
+            'is_enabled' => true,
+        ];
+    }
+
+    public function disabled(): static
+    {
+        return $this->state(['is_enabled' => false]);
+    }
+}

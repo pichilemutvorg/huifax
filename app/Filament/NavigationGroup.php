@@ -10,6 +10,7 @@ use Filament\Support\Contracts\HasLabel;
 enum NavigationGroup implements HasLabel
 {
     case Content;
+    case Schedule;
     case Display;
     case Settings;
 

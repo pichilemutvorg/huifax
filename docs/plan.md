@@ -114,8 +114,9 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
       (respuesta real, vacía, malformada, HTTP de error y sin red), último dato
       válido, íconos locales, diapositiva con hoy y los cuatro días siguientes,
       y cita de la fuente.
-- [ ] Programación: diseñar el modelo (programas, horarios recurrentes,
-      excepciones), su recurso en el panel y su diapositiva. Sin Google
+- [x] Programación: programas, horarios semanales con temporada, cambios
+      puntuales (cancelar o mover una emisión) y emisiones especiales.
+      Diapositivas "Próximamente" y "Programación del día". Sin Google
       Calendar.
 
 ### Fase 4 — Audio y robustez

@@ -3,6 +3,7 @@
 return [
     'navigation' => [
         'content' => 'Content',
+        'schedule' => 'Schedule',
         'display' => 'Display',
         'settings' => 'Settings',
         'view_display' => 'View display',
@@ -66,6 +67,73 @@ return [
         ],
     ],
 
+    'programs' => [
+        'label' => 'program',
+        'plural' => 'programs',
+        'fields' => [
+            'name' => 'Name',
+            'description' => 'Description',
+            'slots_count' => 'Time slots',
+        ],
+        'help' => [
+            'description' => 'One line shown under the name.',
+            'is_enabled' => 'When disabled, none of its time slots or broadcasts show on screen.',
+        ],
+    ],
+
+    'schedule_slots' => [
+        'label' => 'time slot',
+        'plural' => 'time slots',
+        'fields' => [
+            'program' => 'Program',
+            'weekdays' => 'Days',
+            'start_time' => 'Start time',
+            'duration_minutes' => 'Duration (minutes)',
+            'tag' => 'Tag',
+            'valid_from' => 'From',
+            'valid_until' => 'Until',
+            'season' => 'Season',
+        ],
+        'help' => [
+            'season' => 'Leave empty for no limit on that side.',
+        ],
+        'always' => 'Always',
+    ],
+
+    'schedule_exceptions' => [
+        'label' => 'schedule change',
+        'plural' => 'schedule changes',
+        'fields' => [
+            'slot' => 'Time slot',
+            'date' => 'Airing date',
+            'action' => 'Change',
+            'rescheduled_to' => 'New date and time',
+        ],
+        'actions' => [
+            'cancel' => 'Cancel',
+            'move' => 'Move',
+        ],
+        'outcome' => [
+            'cancelled' => 'Cancelled',
+            'moved' => 'Moved to :date',
+        ],
+        'validation' => [
+            'not_an_airing' => 'That time slot does not air on that date.',
+            'duplicate' => 'That airing already has a change.',
+        ],
+    ],
+
+    'special_broadcasts' => [
+        'label' => 'special broadcast',
+        'plural' => 'special broadcasts',
+        'fields' => [
+            'program' => 'Program',
+            'starts_at' => 'Date and time',
+            'duration_minutes' => 'Duration (minutes)',
+            'tag' => 'Tag',
+        ],
+    ],
+
     'slides' => [
         'label' => 'slide',
         'plural' => 'slides',
@@ -75,6 +143,7 @@ return [
             'background' => 'Own background',
             'heading' => 'Heading',
             'location' => 'Location',
+            'count' => 'Number of programs',
             'per_page' => 'Items per page',
         ],
         'help' => [
@@ -88,6 +157,8 @@ return [
     ],
 
     'slide_types' => [
+        'upcoming_programs' => 'Upcoming programs',
+        'daily_schedule' => 'Daily schedule',
         'weather' => 'Weather forecast',
         'emergency_contacts' => 'Emergency numbers',
         'social_links' => 'Social links',

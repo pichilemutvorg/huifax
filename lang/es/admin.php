@@ -3,6 +3,7 @@
 return [
     'navigation' => [
         'content' => 'Contenido',
+        'schedule' => 'Programación',
         'display' => 'Pantalla',
         'settings' => 'Configuración',
         'view_display' => 'Ver pantalla',
@@ -66,6 +67,73 @@ return [
         ],
     ],
 
+    'programs' => [
+        'label' => 'programa',
+        'plural' => 'programas',
+        'fields' => [
+            'name' => 'Nombre',
+            'description' => 'Descripción',
+            'slots_count' => 'Horarios',
+        ],
+        'help' => [
+            'description' => 'Una línea que se muestra bajo el nombre.',
+            'is_enabled' => 'Si lo desactivas, ninguno de sus horarios ni emisiones aparece en pantalla.',
+        ],
+    ],
+
+    'schedule_slots' => [
+        'label' => 'horario',
+        'plural' => 'horarios',
+        'fields' => [
+            'program' => 'Programa',
+            'weekdays' => 'Días',
+            'start_time' => 'Hora de inicio',
+            'duration_minutes' => 'Duración (minutos)',
+            'tag' => 'Etiqueta',
+            'valid_from' => 'Desde',
+            'valid_until' => 'Hasta',
+            'season' => 'Temporada',
+        ],
+        'help' => [
+            'season' => 'Déjalo vacío para que el horario no tenga límite por ese lado.',
+        ],
+        'always' => 'Siempre',
+    ],
+
+    'schedule_exceptions' => [
+        'label' => 'cambio en la grilla',
+        'plural' => 'cambios en la grilla',
+        'fields' => [
+            'slot' => 'Horario',
+            'date' => 'Fecha de la emisión',
+            'action' => 'Cambio',
+            'rescheduled_to' => 'Nueva fecha y hora',
+        ],
+        'actions' => [
+            'cancel' => 'Cancelar',
+            'move' => 'Mover',
+        ],
+        'outcome' => [
+            'cancelled' => 'Cancelada',
+            'moved' => 'Movida al :date',
+        ],
+        'validation' => [
+            'not_an_airing' => 'Ese horario no tiene emisión en esa fecha.',
+            'duplicate' => 'Ya hay un cambio para esa emisión.',
+        ],
+    ],
+
+    'special_broadcasts' => [
+        'label' => 'emisión especial',
+        'plural' => 'emisiones especiales',
+        'fields' => [
+            'program' => 'Programa',
+            'starts_at' => 'Fecha y hora',
+            'duration_minutes' => 'Duración (minutos)',
+            'tag' => 'Etiqueta',
+        ],
+    ],
+
     'slides' => [
         'label' => 'diapositiva',
         'plural' => 'diapositivas',
@@ -75,6 +143,7 @@ return [
             'background' => 'Fondo propio',
             'heading' => 'Encabezado',
             'location' => 'Localidad',
+            'count' => 'Cantidad de programas',
             'per_page' => 'Elementos por página',
         ],
         'help' => [
@@ -88,6 +157,8 @@ return [
     ],
 
     'slide_types' => [
+        'upcoming_programs' => 'Próximos programas',
+        'daily_schedule' => 'Programación del día',
         'weather' => 'Pronóstico del tiempo',
         'emergency_contacts' => 'Números de emergencia',
         'social_links' => 'Redes sociales',

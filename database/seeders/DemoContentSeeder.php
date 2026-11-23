@@ -2,11 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Enums\BroadcastTag;
 use App\Enums\SocialPlatform;
 use App\Models\EmergencyContact;
 use App\Models\Notice;
+use App\Models\Program;
+use App\Models\ScheduleSlot;
 use App\Models\Slide;
 use App\Models\SocialLink;
+use App\Models\SpecialBroadcast;
 use Illuminate\Database\Seeder;
 
 /**
@@ -57,5 +61,43 @@ class DemoContentSeeder extends Seeder
 
         // Its forecast arrives with `php artisan huifax:weather` (or the scheduler).
         Slide::create(['type' => 'weather', 'sort_order' => 3, 'settings' => ['location' => 'stgoc']]);
+
+        $this->seedSchedule();
+
+        Slide::create(['type' => 'upcoming_programs', 'sort_order' => 4]);
+        Slide::create(['type' => 'daily_schedule', 'sort_order' => 5]);
+    }
+
+    private function seedSchedule(): void
+    {
+        $weekdays = [1, 2, 3, 4, 5];
+        $everyDay = [1, 2, 3, 4, 5, 6, 7];
+
+        foreach ([
+            ['Noticiero central', 'Las noticias de la comuna', [[$weekdays, '13:00', 30, BroadcastTag::Live], [$weekdays, '21:00', 45, BroadcastTag::Live]]],
+            ['Buenos días', 'Magacín matinal', [[$weekdays, '08:00', 120, null]]],
+            ['Conversaciones', 'Entrevistas a vecinas y vecinos', [[[2, 4], '19:00', 60, BroadcastTag::Premiere], [[6], '11:00', 60, BroadcastTag::Rerun]]],
+            ['Música en vivo', 'Bandas locales en el estudio', [[[5], '22:00', 90, BroadcastTag::Live]]],
+            ['Documental', null, [[$everyDay, '17:00', 60, null]]],
+        ] as [$name, $description, $slots]) {
+            $program = Program::create(['name' => $name, 'description' => $description]);
+
+            foreach ($slots as [$days, $time, $minutes, $tag]) {
+                ScheduleSlot::create([
+                    'program_id' => $program->id,
+                    'weekdays' => $days,
+                    'start_time' => $time,
+                    'duration_minutes' => $minutes,
+                    'tag' => $tag,
+                ]);
+            }
+        }
+
+        SpecialBroadcast::create([
+            'program_id' => Program::create(['name' => 'Festival costumbrista', 'description' => 'Transmisión desde la plaza'])->id,
+            'starts_at' => now()->addDays(2)->setTime(18, 0),
+            'duration_minutes' => 180,
+            'tag' => BroadcastTag::Live,
+        ]);
     }
 }

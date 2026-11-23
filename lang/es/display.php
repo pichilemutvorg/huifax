@@ -6,6 +6,12 @@ return [
     // Strings used by the display's own interface (sent to the Vue app).
     'ui' => [
         'today' => 'Hoy',
+        'tomorrow' => 'Mañana',
+        'tags' => [
+            'live' => 'En vivo',
+            'premiere' => 'Estreno',
+            'rerun' => 'Repetición',
+        ],
         'min' => 'Mín.',
         'max' => 'Máx.',
         'periods' => [
@@ -18,6 +24,12 @@ return [
     ],
 
     'slides' => [
+        'upcoming_programs' => [
+            'heading' => 'Próximamente',
+        ],
+        'daily_schedule' => [
+            'heading' => 'Programación',
+        ],
         'weather' => [
             'heading' => 'El tiempo',
         ],
