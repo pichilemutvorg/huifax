@@ -1,5 +1,5 @@
 import { onBeforeUnmount, onMounted, toValue } from 'vue';
-import { shouldReload } from '../lib/reload.js';
+import { reloadUrl, shouldReload } from '../lib/reload.js';
 
 const CHECK_EVERY_MS = 60_000;
 
@@ -37,7 +37,8 @@ export function useScheduledReload(reloadAt, timeZone, healthUrl) {
         try {
             const response = await fetch(healthUrl, { cache: 'no-store', signal: AbortSignal.timeout(10_000) });
             if (response.ok) {
-                window.location.reload();
+                // Not location.reload(): see reloadUrl().
+                window.location.assign(reloadUrl(window.location.href, Date.now()));
             }
         } catch {
             // Server unreachable: keep running and try again on the next check.
