@@ -34,6 +34,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    |
+    | `max_size` (KB) caps every upload from the admin panel. PHP must accept
+    | at least as much: see upload_max_filesize and post_max_size in
+    | public/.user.ini (and the web server's request body limit).
+    |
+    | Photos are re-encoded as WebP on upload: scaled down until they just
+    | cover `photo_width` × `photo_height` (the display stage) and stripped of
+    | metadata such as GPS location.
+    |
+    */
+
+    'uploads' => [
+        'max_size' => (int) env('HUIFAX_UPLOAD_MAX_SIZE', 20480),
+        'photo_width' => 1920,
+        'photo_height' => 1080,
+        'photo_quality' => (int) env('HUIFAX_PHOTO_QUALITY', 82),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Slide types
     |--------------------------------------------------------------------------
     |

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Backgrounds;
 
+use App\Filament\Forms\Components\PhotoUpload;
 use App\Filament\NavigationGroup;
 use App\Filament\Resources\Backgrounds\Pages\ManageBackgrounds;
 use App\Filament\Resources\Concerns\HasSentenceCaseLabels;
@@ -9,7 +10,6 @@ use App\Models\Background;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -53,14 +53,11 @@ class BackgroundResource extends Resource
                     ->label(__('admin.backgrounds.fields.name'))
                     ->required()
                     ->maxLength(60),
-                FileUpload::make('path')
+                PhotoUpload::make('path')
                     ->label(__('admin.backgrounds.fields.image'))
-                    ->helperText(__('admin.backgrounds.help.image'))
-                    ->image()
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->helperText(__('admin.backgrounds.help.image', ['size' => (int) (config('huifax.uploads.max_size') / 1024)]))
                     ->disk(Background::DISK)
                     ->directory(Background::DIRECTORY)
-                    ->maxSize(8192)
                     ->required(),
                 Toggle::make('is_enabled')
                     ->label(__('admin.backgrounds.fields.is_enabled'))
