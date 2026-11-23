@@ -103,7 +103,7 @@ return [
             'is_enabled' => 'En la rotación general',
         ],
         'help' => [
-            'image' => 'Fotografía horizontal, idealmente de 1920×1080 o más. Máximo 8 MB.',
+            'image' => 'Fotografía horizontal, idealmente de 1920×1080 o más. Máximo :size MB; se optimiza al subirla.',
             'is_enabled' => 'Si lo desactivas, el fondo solo se usa en las diapositivas que lo tengan asignado.',
         ],
     ],

@@ -77,13 +77,29 @@ class AdminResourcesTest extends TestCase
         Livewire::test(ManageBackgrounds::class)
             ->callAction(CreateAction::class, data: [
                 'name' => 'Punta de Lobos',
-                'path' => UploadedFile::fake()->image('lobos.jpg', 1920, 1080),
+                'path' => UploadedFile::fake()->image('lobos.jpg', 2400, 1350),
                 'is_enabled' => true,
             ])
             ->assertHasNoActionErrors();
 
+        // Stored as an optimized WebP, not the original upload.
         $background = Background::query()->sole();
-        Storage::disk(Background::DISK)->assertExists($background->path);
+        $this->assertStringEndsWith('.webp', $background->path);
+        $this->assertSame('image/webp', getimagesizefromstring(Storage::disk(Background::DISK)->get($background->path))['mime']);
+    }
+
+    public function test_a_background_larger_than_the_upload_limit_is_rejected(): void
+    {
+        Storage::fake(Background::DISK);
+        config(['huifax.uploads.max_size' => 100]);
+        $this->actingAs(User::factory()->admin()->create());
+
+        Livewire::test(ManageBackgrounds::class)
+            ->callAction(CreateAction::class, data: [
+                'name' => 'Demasiado grande',
+                'path' => UploadedFile::fake()->image('big.jpg')->size(200),
+            ])
+            ->assertHasActionErrors(['path']);
     }
 
     public function test_display_settings_are_saved(): void

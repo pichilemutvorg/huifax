@@ -37,3 +37,26 @@ export function pickNextSlide(previous, next, currentId) {
     // so its old index now points at the slide that would have come next.
     return next[indexInPrevious % next.length];
 }
+
+/**
+ * Picks the slide before `currentId`, wrapping around. Used for manual
+ * navigation; with no current slide (or one no longer listed) it starts
+ * from the last slide.
+ *
+ * @template {{ id: string }} T
+ * @param {T[]} slides
+ * @param {string | null} currentId
+ * @returns {T | null} Null when there is nothing to show.
+ */
+export function pickPreviousSlide(slides, currentId) {
+    if (slides.length === 0) {
+        return null;
+    }
+
+    const index = slides.findIndex((slide) => slide.id === currentId);
+    if (index === -1) {
+        return slides.at(-1);
+    }
+
+    return slides[(index - 1 + slides.length) % slides.length];
+}

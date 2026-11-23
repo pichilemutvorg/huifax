@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pickNextSlide } from '../../../resources/js/display/lib/rotation.js';
+import { pickNextSlide, pickPreviousSlide } from '../../../resources/js/display/lib/rotation.js';
 
 const slides = (...ids) => ids.map((id) => ({ id }));
 
@@ -37,5 +37,23 @@ describe('pickNextSlide', () => {
 
     it('starts over when the current slide is unknown', () => {
         expect(pickNextSlide(slides('a'), slides('x', 'y'), 'zzz').id).toBe('x');
+    });
+});
+
+describe('pickPreviousSlide', () => {
+    const slides = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+
+    it('returns the slide before the current one, wrapping around', () => {
+        expect(pickPreviousSlide(slides, 'b').id).toBe('a');
+        expect(pickPreviousSlide(slides, 'a').id).toBe('c');
+    });
+
+    it('starts from the last slide when the current one is unknown', () => {
+        expect(pickPreviousSlide(slides, null).id).toBe('c');
+        expect(pickPreviousSlide(slides, 'gone').id).toBe('c');
+    });
+
+    it('returns null when there is nothing to show', () => {
+        expect(pickPreviousSlide([], 'a')).toBeNull();
     });
 });

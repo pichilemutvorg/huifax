@@ -1,5 +1,5 @@
 import { onBeforeUnmount, onMounted, shallowRef } from 'vue';
-import { pickNextSlide } from '../lib/rotation.js';
+import { pickNextSlide, pickPreviousSlide } from '../lib/rotation.js';
 
 /** Seconds the idle screen stays before checking again for content. */
 const IDLE_SECONDS = 10;
@@ -44,8 +44,20 @@ export function useRotation(content, applyPending) {
         timer = setTimeout(advance, SKIP_DELAY_SECONDS * 1000);
     }
 
+    /** Manual navigation: the chosen slide gets its full duration. */
+    function next() {
+        advance();
+    }
+
+    function previous() {
+        if (applyPending()) {
+            failed.clear();
+        }
+        show(pickPreviousSlide(playable(), current.value?.id ?? null));
+    }
+
     onMounted(() => show(pickNextSlide([], playable(), null)));
     onBeforeUnmount(() => clearTimeout(timer));
 
-    return { current, skip };
+    return { current, skip, next, previous };
 }

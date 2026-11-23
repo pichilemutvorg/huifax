@@ -17,6 +17,7 @@ const app = createApp(App, {
     etag: root.dataset.etag || null,
     apiUrl: root.dataset.apiUrl,
     healthUrl: root.dataset.healthUrl,
+    guides: new URLSearchParams(window.location.search).has('guides'),
 });
 
 // Log and carry on: an error must never leave the screen blank.

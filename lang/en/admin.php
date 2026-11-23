@@ -103,7 +103,7 @@ return [
             'is_enabled' => 'In the general rotation',
         ],
         'help' => [
-            'image' => 'Landscape photo, ideally 1920×1080 or larger. 8 MB max.',
+            'image' => 'Landscape photo, ideally 1920×1080 or larger. :size MB max; optimized on upload.',
             'is_enabled' => 'When off, the background is only used by slides that have it assigned.',
         ],
     ],
