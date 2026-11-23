@@ -4,6 +4,7 @@ namespace App\Display;
 
 use App\Models\Background;
 use App\Models\Slide;
+use App\Settings\AudioSettings;
 use App\Settings\BrandingSettings;
 use App\Settings\DisplaySettings;
 use Carbon\CarbonImmutable;
@@ -23,6 +24,7 @@ class DisplayPayload
         private SlideTypeRegistry $types,
         private BrandingSettings $branding,
         private DisplaySettings $display,
+        private AudioSettings $audio,
     ) {}
 
     /**
@@ -64,6 +66,11 @@ class DisplayPayload
             'poll_interval' => $this->display->poll_interval,
             'reload_at' => $this->display->reload_at,
             'background_interval' => $this->display->background_interval,
+            'audio' => [
+                'enabled' => $this->audio->enabled,
+                'stream_url' => $this->audio->stream_url,
+                'volume' => $this->audio->volume,
+            ],
         ];
     }
 

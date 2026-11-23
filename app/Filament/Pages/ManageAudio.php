@@ -42,6 +42,7 @@ class ManageAudio extends SettingsPage
                     ->live(),
                 TextInput::make('stream_url')
                     ->label(__('admin.settings.audio.fields.stream_url'))
+                    ->helperText(__('admin.settings.audio.help.stream_url'))
                     ->url()
                     ->maxLength(500)
                     ->required(fn (Get $get): bool => (bool) $get('enabled')),

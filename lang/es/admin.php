@@ -21,6 +21,19 @@ return [
         'source_code' => 'Código fuente',
     ],
 
+    'status' => [
+        'heading' => 'Estado',
+        'display' => 'Pantalla',
+        'connected' => 'Conectada',
+        'disconnected' => 'Sin conexión',
+        'last_seen' => 'Última consulta :time',
+        'never_seen' => 'Aún no se ha conectado',
+        'weather' => 'Clima · :location',
+        'updated' => 'Actualizado :time',
+        'no_data' => 'Sin datos',
+        'weather_help' => 'Se actualiza cada 30 minutos con el scheduler',
+    ],
+
     'notices' => [
         'label' => 'aviso',
         'plural' => 'avisos',
@@ -177,6 +190,7 @@ return [
             ],
             'help' => [
                 'enabled' => 'Normalmente el audio lo reproduce el sistema de emisión (p. ej. CasparCG). Actívalo solo si la pantalla debe reproducirlo.',
+                'stream_url' => 'Usa https si está disponible: si el sitio usa HTTPS, un stream http puede quedar bloqueado.',
             ],
         ],
     ],
