@@ -25,6 +25,14 @@ export function useRotation(content, applyPending) {
         current.value = slide;
         clearTimeout(timer);
         timer = setTimeout(advance, (slide?.duration ?? IDLE_SECONDS) * 1000);
+        preloadImage(pickNextSlide(playable(), playable(), slide?.id ?? null));
+    }
+
+    /** Fetch the next slide's image ahead of time so it appears complete. */
+    function preloadImage(slide) {
+        if (slide?.data?.image) {
+            new Image().src = slide.data.image;
+        }
     }
 
     function advance() {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Display\SlideTypes\EmergencyContactsSlide;
+use App\Display\SlideTypes\FeaturedProgramsSlide;
 use App\Display\SlideTypes\NoticesSlide;
 use App\Display\SlideTypes\SocialLinksSlide;
 use App\Display\SlideTypes\WeatherSlide;
@@ -69,6 +70,7 @@ return [
         SocialLinksSlide::class,
         NoticesSlide::class,
         WeatherSlide::class,
+        FeaturedProgramsSlide::class,
     ],
 
     /*

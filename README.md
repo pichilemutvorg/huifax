@@ -56,7 +56,7 @@ La zona horaria y el locale de la instancia se configuran en `.env` (ver
 diaria y el audio se editan en el panel, en *Configuración*.
 
 El panel tiene dos roles: **administrador** (todo) y **editor** (avisos,
-números de emergencia y redes sociales).
+programas destacados, números de emergencia y redes sociales).
 
 Antes de un commit: `composer lint`, `npm run format`, `php artisan test` y
 `npm test`.

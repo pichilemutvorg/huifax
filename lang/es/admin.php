@@ -43,6 +43,24 @@ return [
         ],
     ],
 
+    'featured_programs' => [
+        'label' => 'programa destacado',
+        'plural' => 'programas destacados',
+        'fields' => [
+            'name' => 'Nombre',
+            'label' => 'Etiqueta',
+            'tagline' => 'Frase',
+            'schedule' => 'Horario',
+            'image' => 'Imagen',
+        ],
+        'help' => [
+            'label' => 'Opcional y breve, por ejemplo Estreno o En vivo.',
+            'schedule' => 'Tal como se mostrará, por ejemplo: Lunes a viernes, 21:00.',
+            'image' => 'Arte o fotografía del programa, idealmente de 1920×1080. Máximo :size MB; se optimiza al subirla.',
+            'duration' => 'Déjalo vacío para usar la duración de la diapositiva de destacados.',
+        ],
+    ],
+
     'emergency_contacts' => [
         'label' => 'número de emergencia',
         'plural' => 'números de emergencia',
@@ -88,6 +106,7 @@ return [
     ],
 
     'slide_types' => [
+        'featured_programs' => 'Programas destacados',
         'weather' => 'Pronóstico del tiempo',
         'emergency_contacts' => 'Números de emergencia',
         'social_links' => 'Redes sociales',

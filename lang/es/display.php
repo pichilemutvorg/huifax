@@ -18,6 +18,9 @@ return [
     ],
 
     'slides' => [
+        'featured_programs' => [
+            'heading' => 'No te lo pierdas',
+        ],
         'weather' => [
             'heading' => 'El tiempo',
         ],
