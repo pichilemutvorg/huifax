@@ -43,6 +43,24 @@ return [
         ],
     ],
 
+    'featured_programs' => [
+        'label' => 'featured program',
+        'plural' => 'featured programs',
+        'fields' => [
+            'name' => 'Name',
+            'label' => 'Label',
+            'tagline' => 'Tagline',
+            'schedule' => 'Schedule',
+            'image' => 'Image',
+        ],
+        'help' => [
+            'label' => 'Optional and short, e.g. Premiere or Live.',
+            'schedule' => 'As it will be shown, e.g. Monday to Friday, 9 pm.',
+            'image' => 'Program art or photo, ideally 1920×1080. :size MB max; optimized on upload.',
+            'duration' => 'Leave empty to use the featured programs slide duration.',
+        ],
+    ],
+
     'emergency_contacts' => [
         'label' => 'emergency number',
         'plural' => 'emergency numbers',
@@ -88,6 +106,7 @@ return [
     ],
 
     'slide_types' => [
+        'featured_programs' => 'Featured programs',
         'weather' => 'Weather forecast',
         'emergency_contacts' => 'Emergency numbers',
         'social_links' => 'Social links',

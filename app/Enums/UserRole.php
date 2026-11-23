@@ -9,7 +9,7 @@ enum UserRole: string implements HasLabel
     /** Everything: content, slides, backgrounds, settings and users. */
     case Admin = 'admin';
 
-    /** Content only: notices, emergency contacts and social links. */
+    /** Content only: notices, featured programs, emergency contacts and social links. */
     case Editor = 'editor';
 
     public function getLabel(): string

@@ -16,6 +16,7 @@ class AdminAccessTest extends TestCase
     {
         return [
             'notices' => ['/admin/notices'],
+            'featured programs' => ['/admin/featured-programs'],
             'emergency contacts' => ['/admin/emergency-contacts'],
             'social links' => ['/admin/social-links'],
         ];

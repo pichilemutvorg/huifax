@@ -1,4 +1,5 @@
 import EmergencyContactsSlide from './EmergencyContactsSlide.vue';
+import FeaturedProgramsSlide from './FeaturedProgramsSlide.vue';
 import NoticesSlide from './NoticesSlide.vue';
 import SocialLinksSlide from './SocialLinksSlide.vue';
 import WeatherSlide from './WeatherSlide.vue';
@@ -9,6 +10,7 @@ import WeatherSlide from './WeatherSlide.vue';
  */
 export const slideComponents = {
     emergency_contacts: EmergencyContactsSlide,
+    featured_programs: FeaturedProgramsSlide,
     notices: NoticesSlide,
     social_links: SocialLinksSlide,
     weather: WeatherSlide,
