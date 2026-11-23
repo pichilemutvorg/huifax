@@ -553,6 +553,23 @@ usan los fondos y los destacados.
   detected"). No afecta a la pantalla, pero genera volcados de memoria. Es
   un tema del paquete de CasparCG/CEF.
 
+**Prueba de memoria en CasparCG 2.5.1** (23-11-2026, rotación completa con
+clima, avisos, destacados, emergencias y redes, muestreando cada minuto):
+- Durante 3 h 42 min la memoria quedó estable. El total de los procesos de
+  CasparCG y CEF osciló entre 1.495 y 1.628 MB, sin tendencia al alza. El
+  heap de JavaScript de la página estuvo entre 1,9 y 3,2 MB; al forzar la
+  recolección de basura vuelve a ~1,8 MB. El DOM tuvo entre 33 y 81 nodos,
+  según la diapositiva.
+- **La recarga diaria colgó la página** (05:00). En el CEF de CasparCG,
+  cualquier navegación a la misma URL (`location.reload()`,
+  `location.replace(location.href)`, `location.href = location.href`) deja
+  la página sin responder, sin error en el log. Navegar a una URL distinta sí
+  funciona, también varias veces seguidas.
+- **Corrección:** la recarga diaria navega a la misma página con un parámetro
+  `reload=<marca de tiempo>`. Así la URL siempre es distinta. Se conservan los
+  demás parámetros (como `guides`), y el Service Worker ignora la query de
+  la página. Verificado en CasparCG con tres recargas seguidas.
+
 **Service Worker** (`public/sw.js`), para que la pantalla arranque y siga
 funcionando aunque el servidor no responda:
 - La página y `api/display` se piden primero a la red, con un tiempo límite

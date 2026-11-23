@@ -42,3 +42,23 @@ function toMinutes(value) {
 
     return hours * 60 + minutes;
 }
+
+/** Query parameter that makes each scheduled reload a navigation to a new URL. */
+export const RELOAD_PARAM = 'reload';
+
+/**
+ * URL for the scheduled reload: the same page with a fresh `reload` parameter.
+ * CasparCG's HTML producer (CEF) hangs on same-URL navigations such as
+ * `location.reload()`, while navigating to a different URL works. Other query
+ * parameters (such as guides) are kept.
+ *
+ * @param {string} href Current page URL.
+ * @param {number} now Timestamp that makes the URL unique.
+ */
+export function reloadUrl(href, now) {
+    const url = new URL(href);
+    url.searchParams.set(RELOAD_PARAM, String(now));
+    url.hash = '';
+
+    return url.toString();
+}
