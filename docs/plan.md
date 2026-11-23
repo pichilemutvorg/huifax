@@ -114,7 +114,7 @@ Revisión del bundle publicado en `tools.pichilemutv.org/huifax` (2026-11-21):
       (respuesta real, vacía, malformada, HTTP de error y sin red), último dato
       válido, íconos locales, diapositiva con hoy y los cuatro días siguientes,
       y cita de la fuente.
-- [ ] Programas destacados: anuncios de los programas insignia (imagen,
+- [x] Programas destacados: anuncios de los programas insignia (imagen,
       nombre, frase, horario en texto libre, vigencia). La grilla completa
       vendrá de un sistema de planificación externo (ver decisiones).
 

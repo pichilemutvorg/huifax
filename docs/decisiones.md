@@ -340,7 +340,8 @@ los tipos, la caché y las páginas.
 **Roles: un enum `UserRole` en la columna `users.role`**, sin un paquete de
 permisos. Hay dos roles fijos:
 - **administrador:** todo.
-- **editor:** solo avisos, números de emergencia y redes sociales.
+- **editor:** solo avisos, números de emergencia y redes sociales (desde el
+  2026-11-23, también los programas destacados).
 
 Las restricciones se aplican con policies de Laravel (`SlidePolicy`,
 `BackgroundPolicy`, `UserPolicy`), que Filament respeta, y con `canAccess()`
@@ -495,6 +496,31 @@ cancelaciones y traslados puntuales, y emisiones especiales). Quedó en la rama
   junto con ese sistema. La forma en que la rama de referencia envía cada
   emisión puede servir de punto de partida: programa, descripción, inicio y
   fin en ISO 8601 con desfase, y etiqueta.
+
+### 2026-11-23 — Programas destacados
+
+Reemplazan a la grilla propia (ver la entrada anterior).
+
+**Contenido** (`featured_programs`, en el grupo *Contenido* del panel; lo
+administran también los editores):
+- Nombre, frase opcional y etiqueta opcional de texto libre ("Estreno", "En
+  vivo"; hasta 20 caracteres).
+- Horario en texto libre, tal como se mostrará ("Martes y jueves, 19:00"),
+  sin lógica de recurrencia.
+- Imagen obligatoria, optimizada al subirla igual que los fondos.
+- Vigencia opcional, duración propia opcional, orden y habilitado, como los
+  avisos.
+
+**En pantalla:** la diapositiva `featured_programs` muestra cada destacado
+vigente como su propia página. A la izquierda va la imagen en 16:9 y a la
+derecha la etiqueta, el nombre, la frase y el horario. La imagen va dentro de
+la diapositiva y no como fondo, para que el texto se lea bien sea cual sea la
+imagen. La rotación precarga la imagen de la diapositiva siguiente.
+
+**Código compartido:** la vigencia (`statusAt()` y el scope `activeAt`) pasó
+al trait `HasPublicationWindow`, que usan los avisos y los destacados. La
+limpieza de archivos reemplazados o borrados pasó a `HasStoredImage`, que
+usan los fondos y los destacados.
 
 ## Pendientes
 
