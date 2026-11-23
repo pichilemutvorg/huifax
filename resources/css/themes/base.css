@@ -1,0 +1,215 @@
+/*
+ * Default theme ("huifax") and the base look of every hx-* class.
+ *
+ * Display components mark their parts with semantic hx-* classes and keep
+ * only layout utilities in the markup. Each theme restyles those classes
+ * under [data-theme='<key>'] (see the other files in this folder), so a new
+ * slide type gets every theme for free as long as it uses them.
+ *
+ * Utilities in the markup win over these rules (they live in a later
+ * layer), so markup should only carry layout and, where needed, sizes.
+ */
+
+@plugin 'daisyui/theme' {
+    name: 'huifax';
+    default: true;
+    prefersdark: false;
+    color-scheme: dark;
+
+    --color-base-100: oklch(21% 0.04 245);
+    --color-base-200: oklch(27% 0.045 245);
+    --color-base-300: oklch(33% 0.05 245);
+    --color-base-content: oklch(97% 0.01 245);
+    --color-primary: oklch(80% 0.13 195);
+    --color-primary-content: oklch(20% 0.04 195);
+    --color-secondary: oklch(78% 0.12 75);
+    --color-secondary-content: oklch(22% 0.04 75);
+    --color-accent: oklch(86% 0.14 85);
+    --color-accent-content: oklch(22% 0.04 85);
+    --color-neutral: oklch(30% 0.03 245);
+    --color-neutral-content: oklch(95% 0.01 245);
+    --color-info: oklch(75% 0.12 230);
+    --color-info-content: oklch(20% 0.04 230);
+    --color-success: oklch(78% 0.15 150);
+    --color-success-content: oklch(20% 0.04 150);
+    --color-warning: oklch(84% 0.15 80);
+    --color-warning-content: oklch(22% 0.05 80);
+    --color-error: oklch(70% 0.19 25);
+    --color-error-content: oklch(98% 0.01 25);
+
+    --radius-selector: 1rem;
+    --radius-field: 0.5rem;
+    --radius-box: 1rem;
+
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+
+    --border: 2px;
+
+    --depth: 0;
+    --noise: 0;
+}
+
+@layer components {
+    :root {
+        --font-sans: 'Noto Sans Variable', ui-sans-serif, system-ui, sans-serif;
+        --hx-heading-font: var(--font-sans);
+    }
+
+    body {
+        font-family: var(--font-sans);
+    }
+
+    /* Header */
+    .hx-header {
+        @apply h-36 gap-12;
+    }
+    .hx-brand {
+        @apply gap-8;
+    }
+    .hx-logo {
+        @apply h-28;
+    }
+    .hx-brand-name {
+        @apply text-6xl font-black tracking-tight;
+    }
+    .hx-datetime {
+        @apply text-right;
+    }
+    .hx-clock {
+        @apply text-7xl leading-none font-bold;
+    }
+    .hx-date {
+        @apply mt-3 text-3xl text-base-content/80 first-letter:uppercase;
+    }
+
+    /* Footer */
+    .hx-footer {
+        @apply h-16;
+    }
+    .hx-tagline {
+        @apply text-3xl text-base-content/70;
+    }
+
+    /* Darkening over background photos */
+    .hx-scrim {
+        @apply bg-linear-to-b from-base-100/85 via-base-100/70 to-base-100/90;
+    }
+
+    /* Slide heading */
+    .hx-heading-row {
+        @apply mb-12;
+    }
+    .hx-heading {
+        font-family: var(--hx-heading-font);
+        @apply text-6xl font-bold text-primary;
+    }
+    .hx-pager {
+        @apply text-3xl text-base-content/60;
+    }
+
+    /* Item grids and cards */
+    .hx-grid {
+        --hx-gap: 2.5rem;
+        gap: var(--hx-gap);
+    }
+
+    /*
+     * Lists that must always fit (emergency numbers, social links): the box
+     * takes the space left in the slide, rows share it up to a natural
+     * maximum (--hx-row-max) and each card scales its text to its own
+     * height with cqh units. Set --rows on the list.
+     */
+    .hx-fit {
+        @apply min-h-0 flex-1;
+        container-type: size;
+    }
+    .hx-fit > .hx-grid {
+        align-content: start;
+        grid-auto-rows: min(
+            var(--hx-row-max, 16rem),
+            calc((100cqh - (var(--rows, 1) - 1) * var(--hx-gap)) / var(--rows, 1))
+        );
+    }
+    .hx-fit .hx-card {
+        container-type: size;
+    }
+    .hx-fit .hx-card-body {
+        padding-block: min(2rem, 8cqh);
+    }
+    .hx-card {
+        @apply rounded-box bg-base-200;
+    }
+    .hx-card-body {
+        @apply h-full px-8 py-8;
+    }
+    /* Emergency numbers */
+    .hx-tile-body {
+        @apply flex flex-col items-center justify-center gap-[min(0.75rem,4cqh)] text-center;
+    }
+    /* Social links */
+    .hx-brand-tile-body {
+        @apply flex flex-row items-center gap-8;
+    }
+    /* Weather: today, then the following days */
+    .hx-feature-body {
+        @apply flex flex-col items-center justify-center gap-4 text-center;
+    }
+    .hx-day-body {
+        @apply flex flex-row items-center gap-6 py-6;
+    }
+    .hx-figure {
+        @apply font-black text-accent;
+    }
+    .hx-value {
+        @apply font-bold;
+    }
+    .hx-label {
+        @apply font-semibold;
+    }
+    .hx-icon {
+        @apply text-accent;
+    }
+    .hx-muted {
+        @apply text-base-content/50;
+    }
+    .hx-min {
+        @apply text-info;
+    }
+    .hx-max {
+        @apply text-accent;
+    }
+    .hx-caption {
+        @apply text-2xl text-base-content/70;
+    }
+
+    /* Editorial text: notices and featured programs */
+    .hx-eyebrow {
+        @apply text-4xl font-semibold tracking-wide text-primary uppercase;
+    }
+    .hx-title {
+        font-family: var(--hx-heading-font);
+        @apply text-8xl leading-tight font-black;
+    }
+    .hx-title-sm {
+        @apply text-7xl;
+    }
+    .hx-body {
+        @apply text-5xl leading-snug text-base-content/90;
+    }
+    .hx-body-sm {
+        @apply text-4xl text-base-content/80;
+    }
+    .hx-media {
+        @apply rounded-box bg-base-200 shadow-2xl;
+    }
+    .hx-badge {
+        @apply badge px-6 py-6 text-3xl badge-xl font-bold badge-accent;
+    }
+    .hx-idle-logo {
+        @apply rounded-box;
+    }
+    .hx-highlight {
+        @apply text-5xl font-bold text-accent;
+    }
+}

@@ -10,9 +10,9 @@ defineProps({
 </script>
 
 <template>
-    <div class="mb-12 flex items-baseline justify-between gap-8">
-        <h2 class="text-6xl font-bold text-primary">{{ heading }}</h2>
-        <p v-if="pages > 1" class="text-3xl text-base-content/60 tabular-nums">
+    <div class="hx-heading-row flex items-baseline justify-between gap-8">
+        <h2 class="hx-heading">{{ heading }}</h2>
+        <p v-if="pages > 1" class="hx-pager tabular-nums">
             {{ translate(strings.page_of, { current: page, total: pages }) }}
         </p>
     </div>

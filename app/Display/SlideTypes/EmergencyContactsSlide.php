@@ -31,7 +31,7 @@ class EmergencyContactsSlide extends SlideType
                 ->helperText(__('admin.slides.help.per_page'))
                 ->integer()
                 ->minValue(1)
-                ->maxValue(12)
+                ->maxValue(9)
                 ->placeholder((string) self::DEFAULT_PER_PAGE),
         ];
     }

@@ -1,0 +1,141 @@
+/*
+ * Material Design 3 (dark, baseline palette): tonal surfaces, extra-large
+ * rounded cards, regular-weight display type in Roboto Flex, filled tonal
+ * containers and pill-shaped emphasis.
+ */
+
+@plugin 'daisyui/theme' {
+    name: 'material';
+    color-scheme: dark;
+
+    --color-base-100: #141218;
+    --color-base-200: #211f26;
+    --color-base-300: #2b2930;
+    --color-base-content: #e6e0e9;
+    --color-primary: #d0bcff;
+    --color-primary-content: #381e72;
+    --color-secondary: #ccc2dc;
+    --color-secondary-content: #332d41;
+    --color-accent: #efb8c8;
+    --color-accent-content: #492532;
+    --color-neutral: #49454f;
+    --color-neutral-content: #e6e0e9;
+    --color-info: #a8c7fa;
+    --color-info-content: #062e6f;
+    --color-success: #a6d4a0;
+    --color-success-content: #0f3a12;
+    --color-warning: #f3c37c;
+    --color-warning-content: #432c00;
+    --color-error: #f2b8b5;
+    --color-error-content: #601410;
+
+    --radius-selector: 1rem;
+    --radius-field: 2rem;
+    --radius-box: 1.75rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 0;
+    --noise: 0;
+}
+
+@layer components {
+    [data-theme='material'] {
+        --font-sans: 'Roboto Flex Variable', ui-sans-serif, system-ui, sans-serif;
+        --hx-heading-font: var(--font-sans);
+        --md-primary-container: #4f378b;
+        --md-on-primary-container: #eaddff;
+        --md-secondary-container: #4a4458;
+        --md-on-secondary-container: #e8def8;
+
+        .hx-scrim {
+            @apply bg-linear-to-b from-base-100/90 via-base-100/78 to-base-100/92;
+        }
+
+        .hx-brand-name {
+            @apply font-medium;
+        }
+        .hx-clock {
+            @apply font-normal;
+        }
+        .hx-date {
+            @apply font-medium text-base-content/70;
+        }
+        .hx-tagline {
+            @apply text-base-content/60;
+        }
+
+        .hx-heading {
+            @apply font-normal text-base-content;
+        }
+        .hx-pager {
+            @apply font-medium;
+        }
+
+        .hx-grid {
+            --hx-gap: 1.5rem;
+        }
+        .hx-card {
+            @apply rounded-[1.75rem] bg-base-200;
+        }
+        .hx-card-feature,
+        .hx-tile {
+            background-color: var(--md-primary-container);
+            color: var(--md-on-primary-container);
+        }
+        .hx-figure {
+            @apply font-normal text-primary;
+        }
+        .hx-tile .hx-figure,
+        .hx-card-feature .hx-figure {
+            color: var(--md-on-primary-container);
+        }
+        .hx-value {
+            @apply font-normal;
+        }
+        .hx-label {
+            @apply font-medium text-base-content/80;
+        }
+        .hx-tile .hx-label {
+            color: var(--md-on-primary-container);
+            @apply opacity-80;
+        }
+        .hx-icon {
+            @apply text-primary;
+        }
+
+        .hx-eyebrow {
+            background-color: var(--md-secondary-container);
+            color: var(--md-on-secondary-container);
+            @apply rounded-lg px-6 py-2 text-3xl font-medium tracking-normal normal-case;
+        }
+        .hx-title {
+            @apply font-normal;
+        }
+        .hx-body {
+            @apply text-base-content/80;
+        }
+        .hx-media {
+            @apply rounded-[1.75rem] shadow-none;
+        }
+        .hx-badge {
+            background-color: var(--md-secondary-container);
+            color: var(--md-on-secondary-container);
+            @apply rounded-lg px-6 py-2 text-2xl font-medium;
+        }
+        .hx-highlight {
+            @apply rounded-full bg-primary px-10 py-4 text-4xl font-medium text-primary-content;
+        }
+
+        .slide-enter {
+            animation: hx-material-enter 500ms cubic-bezier(0.2, 0, 0, 1);
+        }
+    }
+}
+
+@keyframes hx-material-enter {
+    from {
+        opacity: 0;
+        transform: translateY(2.5rem);
+    }
+}

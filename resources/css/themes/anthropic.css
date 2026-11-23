@@ -1,0 +1,153 @@
+/*
+ * Inspired by Anthropic's visual identity: warm ivory paper, near-black
+ * slate type, a clay accent, serif headlines over a clean sans-serif body
+ * and plenty of space. Source Serif 4 and Inter stand in for the brand fonts.
+ */
+
+@plugin 'daisyui/theme' {
+    name: 'anthropic';
+    color-scheme: light;
+
+    --color-base-100: #f0eee6;
+    --color-base-200: #e8e6dc;
+    --color-base-300: #dedbd0;
+    --color-base-content: #141413;
+    --color-primary: #d97757;
+    --color-primary-content: #141413;
+    --color-secondary: #6a9bcc;
+    --color-secondary-content: #141413;
+    --color-accent: #d97757;
+    --color-accent-content: #141413;
+    --color-neutral: #141413;
+    --color-neutral-content: #f0eee6;
+    --color-info: #6a9bcc;
+    --color-info-content: #141413;
+    --color-success: #788c5d;
+    --color-success-content: #f0eee6;
+    --color-warning: #c9a04e;
+    --color-warning-content: #141413;
+    --color-error: #bf4d43;
+    --color-error-content: #f0eee6;
+
+    --radius-selector: 9999px;
+    --radius-field: 0.75rem;
+    --radius-box: 1rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 0;
+    --noise: 0;
+}
+
+@layer components {
+    [data-theme='anthropic'] {
+        --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+        --hx-heading-font: 'Source Serif 4 Variable', ui-serif, Georgia, serif;
+
+        .hx-scrim {
+            @apply bg-base-100/92;
+        }
+
+        .hx-brand,
+        .hx-idle-logo {
+            @apply rounded-2xl bg-neutral px-6 py-3;
+        }
+        .hx-logo {
+            @apply h-20;
+        }
+        .hx-brand-name {
+            font-family: var(--hx-heading-font);
+            @apply font-normal text-neutral-content;
+        }
+        .hx-clock {
+            font-family: var(--hx-heading-font);
+            @apply font-normal;
+        }
+        .hx-date {
+            @apply text-base-content/60;
+        }
+        .hx-tagline {
+            @apply text-base-content/50;
+        }
+
+        .hx-heading {
+            @apply text-7xl font-normal tracking-tight text-base-content;
+        }
+        .hx-pager {
+            @apply text-base-content/50;
+        }
+
+        .hx-grid {
+            --hx-gap: 2rem;
+        }
+        .hx-card {
+            @apply rounded-2xl border border-black/5 bg-[#faf9f5];
+        }
+        .hx-card-feature {
+            @apply border-0 bg-neutral text-neutral-content;
+        }
+        .hx-figure {
+            font-family: var(--hx-heading-font);
+            @apply font-normal text-base-content;
+        }
+        .hx-card-feature :is(.hx-figure, .hx-max) {
+            @apply text-neutral-content;
+        }
+        .hx-value {
+            @apply font-medium;
+        }
+        .hx-label {
+            @apply font-medium text-base-content/60;
+        }
+        .hx-card-feature .hx-label {
+            @apply text-neutral-content/70;
+        }
+        .hx-card-feature .hx-muted {
+            @apply text-neutral-content/45;
+        }
+        .hx-icon {
+            @apply text-primary;
+        }
+        .hx-muted {
+            @apply text-base-content/35;
+        }
+        .hx-min {
+            @apply text-secondary;
+        }
+        .hx-max {
+            @apply text-primary;
+        }
+        .hx-caption {
+            @apply text-base-content/50;
+        }
+
+        .hx-eyebrow {
+            @apply text-2xl font-medium tracking-[0.18em] text-primary uppercase;
+        }
+        .hx-title {
+            @apply font-normal tracking-tight;
+        }
+        .hx-body {
+            @apply text-base-content/70;
+        }
+        .hx-media {
+            @apply rounded-2xl shadow-none;
+        }
+        .hx-badge {
+            @apply rounded-full px-6 py-2 text-2xl font-medium;
+        }
+        .hx-highlight {
+            @apply border-b-4 border-primary pb-2 font-medium text-base-content;
+        }
+
+        .slide-enter {
+            animation: hx-anthropic-enter 900ms ease;
+        }
+    }
+}
+
+@keyframes hx-anthropic-enter {
+    from {
+        opacity: 0;
+    }
+}

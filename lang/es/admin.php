@@ -155,6 +155,29 @@ return [
         ],
     ],
 
+    'preview' => [
+        'title' => 'Vista previa',
+        'theme' => 'Tema',
+        'refresh' => 'Actualizar',
+        'help' => 'Así se verá la rotación, en orden. Elegir un tema aquí no cambia la pantalla.',
+        'slides' => ':count páginas en rotación',
+        'cycle' => 'ciclo completo de :time',
+        'page' => 'página :page de :pages',
+        'seconds' => ':seconds s',
+        'empty' => 'No hay diapositivas en rotación: la pantalla muestra el logo y el lema.',
+    ],
+
+    'themes' => [
+        'huifax' => 'HUIFAX (predeterminado)',
+        'metro' => 'Metro',
+        'apple' => 'Inspirado en Apple',
+        'material' => 'Material',
+        'vercel' => 'Inspirado en Vercel',
+        'shadcn' => 'Inspirado en shadcn/ui',
+        'bbc' => 'Inspirado en la BBC',
+        'anthropic' => 'Inspirado en Anthropic',
+    ],
+
     'settings' => [
         'branding' => [
             'title' => 'Marca',
@@ -172,11 +195,13 @@ return [
         'display' => [
             'title' => 'Pantalla',
             'fields' => [
+                'theme' => 'Tema',
                 'poll_interval' => 'Revisar cambios cada (segundos)',
                 'reload_at' => 'Recarga diaria a las',
                 'background_interval' => 'Cambiar de fondo cada (segundos)',
             ],
             'help' => [
+                'theme' => 'Aspecto de la pantalla. El cambio se aplica al pasar a la siguiente diapositiva.',
                 'poll_interval' => 'Cada cuánto la pantalla busca contenido nuevo. Los cambios se aplican al pasar a la siguiente diapositiva.',
                 'reload_at' => 'Recarga de seguridad, solo si el servidor responde. Déjalo vacío para desactivarla.',
             ],

@@ -31,7 +31,22 @@ return [
         // Daily safety reload of the display page, as HH:MM in app.timezone.
         // Set to an empty value to disable it.
         'reload_at' => env('HUIFAX_RELOAD_AT', '05:00') ?: null,
+
+        // Initial visual theme, one of `themes` below.
+        'theme' => env('HUIFAX_THEME', 'huifax'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Themes
+    |--------------------------------------------------------------------------
+    |
+    | Visual themes the display can use; the first one is the default. Each
+    | key must match a stylesheet in resources/css/themes (data-theme).
+    |
+    */
+
+    'themes' => ['huifax', 'metro', 'apple', 'material', 'vercel', 'shadcn', 'bbc', 'anthropic'],
 
     /*
     |--------------------------------------------------------------------------

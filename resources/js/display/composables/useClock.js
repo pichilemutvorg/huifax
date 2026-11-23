@@ -24,7 +24,13 @@ export function useClock(locale, timeZone) {
         const lang = toValue(locale) || undefined;
 
         return {
-            time: new Intl.DateTimeFormat(lang, { ...options, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }),
+            time: new Intl.DateTimeFormat(lang, {
+                ...options,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hourCycle: 'h23',
+            }),
             date: new Intl.DateTimeFormat(lang, {
                 ...options,
                 weekday: 'long',

@@ -1,0 +1,152 @@
+/*
+ * Inspired by shadcn/ui (zinc, light): white cards with a hairline border and
+ * a soft shadow, neutral greys, medium radius, outline badges.
+ */
+
+@plugin 'daisyui/theme' {
+    name: 'shadcn';
+    color-scheme: light;
+
+    --color-base-100: #ffffff;
+    --color-base-200: #f4f4f5;
+    --color-base-300: #e4e4e7;
+    --color-base-content: #09090b;
+    --color-primary: #18181b;
+    --color-primary-content: #fafafa;
+    --color-secondary: #f4f4f5;
+    --color-secondary-content: #18181b;
+    --color-accent: #18181b;
+    --color-accent-content: #fafafa;
+    --color-neutral: #18181b;
+    --color-neutral-content: #fafafa;
+    --color-info: #2563eb;
+    --color-info-content: #ffffff;
+    --color-success: #16a34a;
+    --color-success-content: #ffffff;
+    --color-warning: #d97706;
+    --color-warning-content: #ffffff;
+    --color-error: #dc2626;
+    --color-error-content: #ffffff;
+
+    --radius-selector: 0.5rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.75rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+}
+
+@layer components {
+    [data-theme='shadcn'] {
+        --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+        --hx-heading-font: var(--font-sans);
+
+        .hx-scrim {
+            @apply bg-zinc-50/90;
+        }
+
+        /* Logos are usually light: give them a dark chip on light themes. */
+        .hx-brand,
+        .hx-idle-logo {
+            @apply rounded-xl bg-zinc-950 px-6 py-3;
+        }
+        .hx-logo {
+            @apply h-20;
+        }
+        .hx-brand-name {
+            @apply font-semibold tracking-tight text-zinc-50;
+        }
+        .hx-clock {
+            @apply font-semibold tracking-tight;
+        }
+        .hx-date {
+            @apply font-medium text-zinc-500;
+        }
+        .hx-tagline {
+            @apply text-zinc-500;
+        }
+
+        .hx-heading {
+            @apply font-semibold tracking-tight text-zinc-950;
+        }
+        .hx-pager {
+            @apply font-medium text-zinc-500;
+        }
+
+        .hx-grid {
+            --hx-gap: 1.5rem;
+        }
+        .hx-card {
+            @apply rounded-xl border border-zinc-200 bg-white shadow-sm;
+        }
+        .hx-card-feature {
+            @apply border-zinc-900 bg-zinc-900 text-zinc-50;
+        }
+        .hx-figure {
+            @apply font-semibold tracking-tight text-zinc-950;
+        }
+        .hx-card-feature .hx-figure,
+        .hx-card-feature .hx-max {
+            @apply text-zinc-50;
+        }
+        .hx-value {
+            @apply font-semibold tracking-tight;
+        }
+        .hx-label {
+            @apply font-medium text-zinc-500;
+        }
+        .hx-card-feature .hx-label {
+            @apply text-zinc-400;
+        }
+        .hx-icon {
+            @apply text-zinc-900;
+        }
+        .hx-muted {
+            @apply text-zinc-400;
+        }
+        .hx-min {
+            @apply text-blue-600;
+        }
+        .hx-card-feature .hx-min {
+            @apply text-blue-300;
+        }
+        .hx-max {
+            @apply text-zinc-950;
+        }
+        .hx-caption {
+            @apply text-zinc-500;
+        }
+
+        .hx-eyebrow {
+            @apply rounded-md border border-zinc-200 bg-white px-4 py-1 text-2xl font-medium tracking-normal text-zinc-700 normal-case shadow-sm;
+        }
+        .hx-title {
+            @apply font-bold tracking-tight text-zinc-950;
+        }
+        .hx-body {
+            @apply text-zinc-600;
+        }
+        .hx-media {
+            @apply rounded-xl border border-zinc-200 shadow-sm;
+        }
+        .hx-badge {
+            @apply rounded-md bg-zinc-900 px-5 py-2 text-2xl font-medium text-zinc-50;
+        }
+        .hx-highlight {
+            @apply font-semibold tracking-tight text-zinc-950;
+        }
+
+        .slide-enter {
+            animation: hx-shadcn-enter 300ms ease-out;
+        }
+    }
+}
+
+@keyframes hx-shadcn-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+}

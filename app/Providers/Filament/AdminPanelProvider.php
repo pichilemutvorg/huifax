@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\NavigationGroup;
+use App\Http\Controllers\PreviewFrameController;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -20,6 +21,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -65,6 +67,10 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            // The preview page frames this route; it needs the panel's session and login.
+            ->authenticatedRoutes(function (): void {
+                Route::get('preview/frame', PreviewFrameController::class)->name('preview.frame');
+            })
             ->authMiddleware([
                 Authenticate::class,
             ]);
