@@ -1,0 +1,231 @@
+/*
+ * Metro: flat colour tiles, square corners, large thin type in lowercase
+ * headings, and tiles that swing in one after another ("turnstile").
+ * Echoes the original HUIFAX: a solid brand block next to an uppercase date.
+ */
+
+@plugin 'daisyui/theme' {
+    name: 'metro';
+    color-scheme: dark;
+
+    --color-base-100: oklch(18% 0.02 245);
+    --color-base-200: oklch(24% 0.025 245);
+    --color-base-300: oklch(30% 0.03 245);
+    --color-base-content: oklch(98% 0 0);
+    --color-primary: oklch(64% 0.13 230);
+    --color-primary-content: oklch(99% 0 0);
+    --color-secondary: oklch(58% 0.2 340);
+    --color-secondary-content: oklch(99% 0 0);
+    --color-accent: oklch(72% 0.17 65);
+    --color-accent-content: oklch(99% 0 0);
+    --color-neutral: oklch(15% 0.01 245);
+    --color-neutral-content: oklch(98% 0 0);
+    --color-info: oklch(60% 0.15 250);
+    --color-info-content: oklch(99% 0 0);
+    --color-success: oklch(62% 0.16 145);
+    --color-success-content: oklch(99% 0 0);
+    --color-warning: oklch(68% 0.16 55);
+    --color-warning-content: oklch(99% 0 0);
+    --color-error: oklch(58% 0.21 27);
+    --color-error-content: oklch(99% 0 0);
+
+    --radius-selector: 0;
+    --radius-field: 0;
+    --radius-box: 0;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 0px;
+    --depth: 0;
+    --noise: 0;
+}
+
+@layer components {
+    [data-theme='metro'] {
+        --font-sans: 'Open Sans Variable', ui-sans-serif, system-ui, sans-serif;
+        --hx-heading-font: var(--font-sans);
+
+        .hx-scrim {
+            @apply bg-linear-to-r from-black/75 via-black/45 to-black/20;
+        }
+
+        /* Header: brand tile | date bar | clock box */
+        .hx-header {
+            @apply h-28 items-stretch gap-0;
+        }
+        .hx-brand {
+            @apply bg-primary px-8;
+        }
+        .hx-logo {
+            @apply h-16;
+        }
+        .hx-brand-name {
+            @apply text-5xl font-semibold;
+        }
+        .hx-datetime {
+            @apply flex flex-1 flex-row-reverse items-stretch text-left;
+        }
+        .hx-clock {
+            @apply flex items-center bg-black/60 px-10 text-7xl leading-none font-light;
+        }
+        .hx-date {
+            @apply m-0 flex flex-1 items-center bg-black/40 px-10 text-4xl font-semibold tracking-[0.12em] text-base-content/90 uppercase;
+        }
+
+        .hx-tagline {
+            @apply flex items-center gap-6 text-2xl tracking-[0.1em] text-base-content/80 uppercase;
+        }
+        .hx-tagline::before {
+            @apply size-6 shrink-0 bg-primary;
+            content: '';
+        }
+
+        .hx-heading-row {
+            @apply mb-8;
+        }
+        .hx-heading {
+            @apply text-8xl font-light tracking-tight text-base-content lowercase;
+        }
+        .hx-pager {
+            @apply font-light;
+        }
+
+        .hx-grid {
+            --hx-gap: 1rem;
+        }
+        .hx-card {
+            @apply rounded-none bg-black/55;
+        }
+        .hx-figure {
+            @apply font-light text-base-content;
+        }
+        .hx-value {
+            @apply font-light;
+        }
+        .hx-label {
+            @apply font-normal;
+        }
+        .hx-icon {
+            @apply text-white;
+        }
+        .hx-min,
+        .hx-max {
+            @apply text-base-content;
+        }
+
+        /* Emergency numbers: one colour per tile, label on top, number below */
+        .hx-tile {
+            @apply text-white;
+        }
+        .hx-tile:nth-child(6n + 1) {
+            @apply bg-error;
+        }
+        .hx-tile:nth-child(6n + 2) {
+            @apply bg-warning;
+        }
+        .hx-tile:nth-child(6n + 3) {
+            @apply bg-success;
+        }
+        .hx-tile:nth-child(6n + 4) {
+            @apply bg-info;
+        }
+        .hx-tile:nth-child(6n + 5) {
+            @apply bg-primary;
+        }
+        .hx-tile:nth-child(6n + 6) {
+            @apply bg-secondary;
+        }
+        .hx-tile-body {
+            @apply flex-col-reverse items-start justify-between gap-2 text-left;
+        }
+
+        /* Social links: each network in its own colour */
+        .hx-brand-tile {
+            background-color: var(--hx-brand, var(--color-primary));
+            @apply text-white;
+        }
+        .hx-brand-tile .hx-label {
+            @apply tracking-widest uppercase opacity-80;
+        }
+
+        .hx-card-feature {
+            @apply bg-primary text-primary-content;
+        }
+        .hx-feature-body {
+            @apply items-start justify-between text-left;
+        }
+
+        .hx-caption {
+            @apply text-xl;
+        }
+
+        /* Notices and featured programs */
+        .hx-eyebrow {
+            @apply bg-secondary px-6 py-2 text-3xl font-normal tracking-[0.15em] text-secondary-content uppercase;
+        }
+        .hx-title {
+            @apply text-9xl leading-[1.1] font-light tracking-tight;
+        }
+        .hx-title-sm {
+            @apply text-7xl leading-tight;
+        }
+        .hx-body {
+            @apply border-l-8 border-secondary pl-8 font-light;
+        }
+        .hx-body-sm {
+            @apply border-0 pl-0;
+        }
+        .hx-featured {
+            @apply items-stretch gap-4;
+        }
+        .hx-featured-text {
+            @apply h-full justify-end bg-black/60 p-12;
+        }
+        .hx-media {
+            @apply h-full rounded-none shadow-none;
+        }
+        .hx-badge {
+            @apply rounded-none px-5 py-2 font-semibold tracking-wider uppercase;
+        }
+        .hx-highlight {
+            @apply border-l-8 border-primary pl-6 font-semibold text-base-content;
+        }
+
+        /* Turnstile: the slide stays, its tiles swing in one by one */
+        .slide-enter {
+            animation: hx-fade 300ms ease-out;
+        }
+        .slide-enter :is(.hx-card, .hx-eyebrow, .hx-title, .hx-body, .hx-media, .hx-featured-text) {
+            animation: hx-metro-turnstile 550ms cubic-bezier(0.1, 0.9, 0.2, 1) both;
+        }
+        .slide-enter :is(.hx-card, .hx-media, .hx-featured-text):nth-child(2),
+        .slide-enter .hx-title {
+            animation-delay: 70ms;
+        }
+        .slide-enter :is(.hx-card):nth-child(3),
+        .slide-enter .hx-body {
+            animation-delay: 140ms;
+        }
+        .slide-enter .hx-card:nth-child(4) {
+            animation-delay: 210ms;
+        }
+        .slide-enter .hx-card:nth-child(5) {
+            animation-delay: 280ms;
+        }
+        .slide-enter .hx-card:nth-child(n + 6) {
+            animation-delay: 350ms;
+        }
+    }
+}
+
+@keyframes hx-metro-turnstile {
+    from {
+        opacity: 0;
+        transform: translateX(5rem);
+    }
+}
+
+@keyframes hx-fade {
+    from {
+        opacity: 0;
+    }
+}

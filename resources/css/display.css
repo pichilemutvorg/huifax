@@ -1,50 +1,22 @@
 @import 'tailwindcss';
+@import './fonts.css';
+@import './themes/base.css';
+@import './themes/metro.css';
+@import './themes/apple.css';
+@import './themes/material.css';
+@import './themes/vercel.css';
+@import './themes/shadcn.css';
+@import './themes/bbc.css';
+@import './themes/anthropic.css';
+
 @plugin 'daisyui' {
     themes: false;
 }
 
-@plugin 'daisyui/theme' {
-    name: 'huifax';
-    default: true;
-    prefersdark: false;
-    color-scheme: dark;
-
-    --color-base-100: oklch(21% 0.04 245);
-    --color-base-200: oklch(27% 0.045 245);
-    --color-base-300: oklch(33% 0.05 245);
-    --color-base-content: oklch(97% 0.01 245);
-    --color-primary: oklch(80% 0.13 195);
-    --color-primary-content: oklch(20% 0.04 195);
-    --color-secondary: oklch(78% 0.12 75);
-    --color-secondary-content: oklch(22% 0.04 75);
-    --color-accent: oklch(86% 0.14 85);
-    --color-accent-content: oklch(22% 0.04 85);
-    --color-neutral: oklch(30% 0.03 245);
-    --color-neutral-content: oklch(95% 0.01 245);
-    --color-info: oklch(75% 0.12 230);
-    --color-info-content: oklch(20% 0.04 230);
-    --color-success: oklch(78% 0.15 150);
-    --color-success-content: oklch(20% 0.04 150);
-    --color-warning: oklch(84% 0.15 80);
-    --color-warning-content: oklch(22% 0.05 80);
-    --color-error: oklch(70% 0.19 25);
-    --color-error-content: oklch(98% 0.01 25);
-
-    --radius-selector: 1rem;
-    --radius-field: 0.5rem;
-    --radius-box: 1rem;
-
-    --size-selector: 0.25rem;
-    --size-field: 0.25rem;
-
-    --border: 2px;
-
-    --depth: 0;
-    --noise: 0;
-}
-
 @source '../js/display/**/*.{vue,js}';
+@source '../js/preview/**/*.{vue,js}';
 @source '../views/display.blade.php';
+@source '../views/preview.blade.php';
 
 /* Full-window display: no scrollbars, no cursor. */
 html,
@@ -82,4 +54,43 @@ body,
     from {
         opacity: 0;
     }
+}
+
+/* Admin preview overview: neutral page, thumbnails without motion. */
+html:has(body.hx-preview),
+.hx-preview {
+    cursor: default;
+    overflow: auto;
+}
+
+html:has(body.hx-preview),
+.hx-preview,
+.hx-preview #preview {
+    height: auto;
+    min-height: 100%;
+}
+
+.hx-preview-page {
+    @apply bg-base-300 text-base-content;
+}
+
+.hx-preview-item {
+    @apply rounded-box bg-base-200 p-3;
+}
+
+.hx-static *,
+.hx-static *::before,
+.hx-static *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/*
+ * Truncated and line-clamped text is clipped at its box, which cuts the
+ * descenders of g, p, y with tight line heights ("pichilemutv.org" read as
+ * ".orq"). Leave them room below the last line. Unlayered on purpose, so no
+ * theme or utility removes it.
+ */
+:is(.truncate, .line-clamp-1, .line-clamp-2, .line-clamp-3, .line-clamp-4, .line-clamp-5) {
+    padding-bottom: 0.18em;
 }

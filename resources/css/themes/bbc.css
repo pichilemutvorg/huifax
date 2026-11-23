@@ -1,0 +1,165 @@
+/*
+ * Inspired by BBC News and its GEL design language: white story cards with a
+ * red top rule, a black header bar with a red underline, bold sans-serif
+ * type and square corners. Source Sans 3 stands in for BBC Reith.
+ */
+
+@plugin 'daisyui/theme' {
+    name: 'bbc';
+    color-scheme: light;
+
+    --color-base-100: #ffffff;
+    --color-base-200: #f6f6f6;
+    --color-base-300: #e6e6e6;
+    --color-base-content: #141414;
+    --color-primary: #b80000;
+    --color-primary-content: #ffffff;
+    --color-secondary: #3f3f42;
+    --color-secondary-content: #ffffff;
+    --color-accent: #b80000;
+    --color-accent-content: #ffffff;
+    --color-neutral: #141414;
+    --color-neutral-content: #ffffff;
+    --color-info: #1d70b8;
+    --color-info-content: #ffffff;
+    --color-success: #00703c;
+    --color-success-content: #ffffff;
+    --color-warning: #f47738;
+    --color-warning-content: #141414;
+    --color-error: #b80000;
+    --color-error-content: #ffffff;
+
+    --radius-selector: 0;
+    --radius-field: 0;
+    --radius-box: 0;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 0;
+    --noise: 0;
+}
+
+@layer components {
+    [data-theme='bbc'] {
+        --font-sans: 'Source Sans 3 Variable', ui-sans-serif, system-ui, sans-serif;
+        --hx-heading-font: var(--font-sans);
+
+        .hx-scrim {
+            @apply bg-white/90;
+        }
+
+        /* Black bar with a red underline */
+        .hx-header {
+            @apply h-28 border-b-[10px] border-primary bg-neutral px-8 text-neutral-content;
+        }
+        .hx-logo {
+            @apply h-16;
+        }
+        .hx-brand-name {
+            @apply text-5xl font-bold;
+        }
+        .hx-clock {
+            @apply text-6xl font-bold;
+        }
+        .hx-date {
+            @apply mt-1 text-2xl text-white/75;
+        }
+        .hx-idle-logo {
+            @apply bg-neutral p-10;
+        }
+
+        /* Ticker-style footer */
+        .hx-footer {
+            @apply h-14 items-stretch;
+        }
+        .hx-tagline {
+            @apply flex flex-1 items-center self-stretch border-l-[16px] border-primary bg-neutral px-6 text-2xl font-semibold text-white;
+        }
+
+        .hx-heading-row {
+            @apply mt-2 mb-10;
+        }
+        .hx-heading {
+            @apply border-l-[12px] border-primary pl-6 font-bold text-neutral;
+        }
+        .hx-pager {
+            @apply font-semibold text-neutral/60;
+        }
+
+        .hx-grid {
+            --hx-gap: 1.5rem;
+        }
+        .hx-card {
+            @apply rounded-none border-t-[6px] border-primary bg-white shadow-none;
+        }
+        .hx-card-feature {
+            @apply border-neutral bg-neutral text-neutral-content;
+        }
+        .hx-figure {
+            @apply font-bold text-neutral;
+        }
+        .hx-card-feature :is(.hx-figure, .hx-max) {
+            @apply text-white;
+        }
+        .hx-value {
+            @apply font-bold;
+        }
+        .hx-label {
+            @apply font-semibold text-neutral/70;
+        }
+        .hx-card-feature .hx-label {
+            @apply text-white/75;
+        }
+        .hx-card-feature .hx-muted {
+            @apply text-white/50;
+        }
+        .hx-icon {
+            @apply text-primary;
+        }
+        .hx-muted {
+            @apply text-neutral/40;
+        }
+        .hx-min {
+            @apply text-info;
+        }
+        .hx-card-feature .hx-min {
+            @apply text-sky-300;
+        }
+        .hx-max {
+            @apply text-primary;
+        }
+        .hx-caption {
+            @apply text-neutral/60;
+        }
+
+        .hx-eyebrow {
+            @apply bg-primary px-5 py-1 text-3xl font-bold tracking-normal text-primary-content uppercase;
+        }
+        .hx-title {
+            @apply font-bold text-neutral;
+        }
+        .hx-body {
+            @apply text-neutral/80;
+        }
+        .hx-media {
+            @apply rounded-none shadow-none;
+        }
+        .hx-badge {
+            @apply rounded-none bg-neutral px-5 py-1 text-2xl font-bold text-neutral-content uppercase;
+        }
+        .hx-highlight {
+            @apply font-bold text-primary;
+        }
+
+        .slide-enter {
+            animation: hx-bbc-enter 350ms ease-out;
+        }
+    }
+}
+
+@keyframes hx-bbc-enter {
+    from {
+        opacity: 0;
+        transform: translateX(-2rem);
+    }
+}

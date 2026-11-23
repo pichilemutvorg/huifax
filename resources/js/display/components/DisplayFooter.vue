@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <footer class="flex h-16 items-end">
-        <p v-if="settings.tagline" class="truncate text-3xl text-base-content/70">{{ settings.tagline }}</p>
+    <footer class="hx-footer flex items-end">
+        <p v-if="settings.tagline" class="hx-tagline truncate">{{ settings.tagline }}</p>
     </footer>
 </template>

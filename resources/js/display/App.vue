@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import BackgroundLayer from './components/BackgroundLayer.vue';
 import DisplayFooter from './components/DisplayFooter.vue';
 import DisplayHeader from './components/DisplayHeader.vue';
@@ -21,6 +21,8 @@ const props = defineProps({
     healthUrl: { type: String, required: true },
     // Start with the safe area guides visible (`?guides` in the URL).
     guides: { type: Boolean, default: false },
+    // Theme forced from the URL (`?theme=`), validated by the server.
+    themeOverride: { type: String, default: null },
 });
 
 const { content, applyPending } = useDisplayContent({
@@ -31,6 +33,12 @@ const { content, applyPending } = useDisplayContent({
 });
 
 const settings = computed(() => content.value.settings);
+
+// Themes are pure CSS keyed by data-theme. Like any content change, a new
+// theme arrives between slides.
+watchEffect(() => {
+    document.documentElement.dataset.theme = props.themeOverride || settings.value.theme || 'huifax';
+});
 const strings = computed(() => content.value.strings);
 
 const { current, skip, next, previous } = useRotation(content, applyPending);

@@ -59,6 +59,7 @@ class DisplayPayload
     {
         return [
             'locale' => config('huifax.display.locale'),
+            'theme' => $this->display->resolvedTheme(),
             'timezone' => config('app.timezone'),
             'title' => $this->branding->title,
             'tagline' => $this->branding->tagline,

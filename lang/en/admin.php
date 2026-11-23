@@ -155,6 +155,29 @@ return [
         ],
     ],
 
+    'preview' => [
+        'title' => 'Preview',
+        'theme' => 'Theme',
+        'refresh' => 'Refresh',
+        'help' => 'The rotation as it will look, in order. Picking a theme here does not change the display.',
+        'slides' => ':count pages in rotation',
+        'cycle' => 'full cycle of :time',
+        'page' => 'page :page of :pages',
+        'seconds' => ':seconds s',
+        'empty' => 'No slides in rotation: the display shows the logo and tagline.',
+    ],
+
+    'themes' => [
+        'huifax' => 'HUIFAX (default)',
+        'metro' => 'Metro',
+        'apple' => 'Apple-inspired',
+        'material' => 'Material',
+        'vercel' => 'Vercel-inspired',
+        'shadcn' => 'shadcn/ui-inspired',
+        'bbc' => 'BBC-inspired',
+        'anthropic' => 'Anthropic-inspired',
+    ],
+
     'settings' => [
         'branding' => [
             'title' => 'Branding',
@@ -172,11 +195,13 @@ return [
         'display' => [
             'title' => 'Display',
             'fields' => [
+                'theme' => 'Theme',
                 'poll_interval' => 'Check for changes every (seconds)',
                 'reload_at' => 'Daily reload at',
                 'background_interval' => 'Change background every (seconds)',
             ],
             'help' => [
+                'theme' => 'Look of the display. Changes apply at the next slide.',
                 'poll_interval' => 'How often the display looks for new content. Changes apply on the next slide.',
                 'reload_at' => 'Safety reload, only if the server answers. Leave empty to disable it.',
             ],

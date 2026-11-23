@@ -42,6 +42,12 @@ Laravel. Hay que agregar al cron del servidor:
 - Pantalla al aire: `/` (con `/?guides` muestra las áreas seguras)
 - Panel de administración: `/admin`
 
+La pantalla tiene varios temas visuales (predeterminado, Metro y otros
+inspirados en Apple, Material, Vercel, shadcn/ui, la BBC y Anthropic). Se elige
+en *Configuración → Pantalla*. Con `/?theme=metro` se prueba un tema solo en esa
+pantalla. *Pantalla → Vista previa* muestra la rotación completa en miniaturas,
+en orden y con sus tiempos, en el tema que elijas.
+
 En la pantalla, las flechas del teclado pasan a la diapositiva siguiente o a la
 anterior, y la tecla `G` muestra u oculta las áreas seguras (*action safe* 93 %
 y *title safe* 90 %).

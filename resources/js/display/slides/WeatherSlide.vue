@@ -35,35 +35,35 @@ const temperature = (value) => (value === null || value === undefined ? '–' : 
     <section class="flex h-full flex-col">
         <SlideHeading :heading="`${data.heading} · ${data.location}`" :strings="strings" />
 
-        <div class="grid min-h-0 flex-1 grid-cols-5 gap-10">
-            <div class="card col-span-2 bg-base-200">
-                <div class="card-body items-center justify-center gap-4 text-center">
-                    <p class="text-4xl font-semibold">
+        <div class="hx-grid grid min-h-0 flex-1 grid-cols-5">
+            <div class="hx-card hx-card-feature col-span-2">
+                <div class="hx-card-body hx-feature-body">
+                    <p class="hx-label text-4xl">
                         {{ strings.today }}
-                        <span v-if="todayCondition?.period" class="text-base-content/70">
+                        <span v-if="todayCondition?.period" class="hx-muted">
                             · {{ strings.periods?.[todayCondition.period] }}
                         </span>
                     </p>
                     <img v-if="todayCondition?.icon" :src="todayCondition.icon" alt="" class="size-48" />
-                    <p class="line-clamp-3 text-4xl leading-snug">{{ todayCondition?.text }}</p>
-                    <p v-if="today.min !== null || today.max !== null" class="mt-2 text-6xl font-black tabular-nums">
-                        <span class="text-info">{{ temperature(today.min) }}</span>
-                        <span class="text-base-content/50"> / </span>
-                        <span class="text-accent">{{ temperature(today.max) }}</span>
+                    <p class="hx-value line-clamp-3 text-4xl leading-snug">{{ todayCondition?.text }}</p>
+                    <p v-if="today.min !== null || today.max !== null" class="hx-figure mt-2 text-6xl tabular-nums">
+                        <span class="hx-min">{{ temperature(today.min) }}</span>
+                        <span class="hx-muted"> / </span>
+                        <span class="hx-max">{{ temperature(today.max) }}</span>
                     </p>
                 </div>
             </div>
 
-            <ul class="col-span-3 grid grid-cols-2 grid-rows-2 gap-10">
-                <li v-for="day in nextDays" :key="day.date" class="card bg-base-200">
-                    <div class="card-body flex-row items-center gap-6 py-6">
+            <ul class="hx-grid col-span-3 grid grid-cols-2 grid-rows-2">
+                <li v-for="day in nextDays" :key="day.date" class="hx-card">
+                    <div class="hx-card-body hx-day-body">
                         <img v-if="day.condition?.icon" :src="day.condition.icon" alt="" class="size-28 shrink-0" />
                         <div class="min-w-0">
-                            <p class="text-4xl font-semibold first-letter:uppercase">{{ dayName(day.date) }}</p>
-                            <p class="mt-2 text-5xl font-black tabular-nums">
-                                <span class="text-info">{{ temperature(day.min) }}</span>
-                                <span class="text-base-content/50"> / </span>
-                                <span class="text-accent">{{ temperature(day.max) }}</span>
+                            <p class="hx-label text-4xl first-letter:uppercase">{{ dayName(day.date) }}</p>
+                            <p class="hx-figure mt-2 text-5xl tabular-nums">
+                                <span class="hx-min">{{ temperature(day.min) }}</span>
+                                <span class="hx-muted"> / </span>
+                                <span class="hx-max">{{ temperature(day.max) }}</span>
                             </p>
                         </div>
                     </div>
@@ -71,6 +71,6 @@ const temperature = (value) => (value === null || value === undefined ? '–' : 
             </ul>
         </div>
 
-        <p class="mt-6 text-2xl text-base-content/70">{{ data.attribution }}</p>
+        <p class="hx-caption mt-6">{{ data.attribution }}</p>
     </section>
 </template>

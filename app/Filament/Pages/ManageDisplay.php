@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Filament\Pages\Concerns\AdminOnlySettingsPage;
 use App\Settings\DisplaySettings;
 use BackedEnum;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use Filament\Schemas\Schema;
@@ -34,6 +35,14 @@ class ManageDisplay extends SettingsPage
     {
         return $schema
             ->components([
+                Select::make('theme')
+                    ->label(__('admin.settings.display.fields.theme'))
+                    ->helperText(__('admin.settings.display.help.theme'))
+                    ->options(fn (): array => collect(config('huifax.themes'))
+                        ->mapWithKeys(fn (string $theme) => [$theme => __("admin.themes.{$theme}")])
+                        ->all())
+                    ->required()
+                    ->selectablePlaceholder(false),
                 TextInput::make('poll_interval')
                     ->label(__('admin.settings.display.fields.poll_interval'))
                     ->helperText(__('admin.settings.display.help.poll_interval'))

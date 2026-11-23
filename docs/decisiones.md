@@ -577,11 +577,99 @@ funcionando aunque el servidor no responda:
   antigüedad del pronóstico de cada localidad: se marca a las 2 horas, ya
   que se actualiza cada 30 minutos.
 
+### 2026-11-23 — Temas visuales y vista previa de la rotación
+
+**Temas solo con CSS.** Un tema son dos cosas:
+- un tema de daisyUI, con colores, radios y bordes;
+- reglas para las clases semánticas `hx-*` bajo `[data-theme='<clave>']`.
+
+Los componentes marcan sus partes con esas clases (`hx-header`, `hx-clock`,
+`hx-heading`, `hx-card`, `hx-figure`, `hx-eyebrow`, `hx-title`, `hx-badge`,
+`hx-highlight`, `hx-scrim`…) y en el HTML dejan solo la estructura (grillas,
+tamaños). Las reglas base, que son el tema predeterminado, están en
+`resources/css/themes/base.css`; cada tema tiene su archivo en esa carpeta.
+
+- **Por qué así:** una diapositiva nueva funciona en todos los temas sin
+  duplicar componentes, y un tema nuevo es un solo archivo CSS.
+- **Descartado:** componentes de Vue por tema, que multiplicaban el
+  mantenimiento por cada tipo de diapositiva. Si algún día un tema necesita
+  otra estructura, se puede sumar un registro de componentes con respaldo
+  al predeterminado.
+- **Animación de entrada:** cada tema puede cambiarla; Metro hace entrar los
+  mosaicos uno tras otro.
+
+**Temas incluidos** (`huifax.themes`; el primero es el predeterminado). Los
+"inspirados en" toman el lenguaje visual público de cada sistema de diseño,
+sin logos ni fuentes propietarias y sin afiliación:
+
+| Clave | Estilo | Fuente | Base |
+|---|---|---|---|
+| `huifax` | Predeterminado actual | Noto Sans | Oscuro |
+| `metro` | Metro: mosaicos de color, esquinas rectas, minúsculas | Open Sans | Oscuro |
+| `apple` | Apple HIG/tvOS: materiales translúcidos, esquinas grandes | Inter (en lugar de SF Pro) | Oscuro |
+| `material` | Material Design 3: superficies tonales, píldoras | Roboto Flex | Oscuro |
+| `vercel` | Geist: negro, bordes finos, etiquetas monoespaciadas | Geist y Geist Mono | Oscuro |
+| `shadcn` | shadcn/ui: tarjetas blancas con borde, zinc | Inter | Claro |
+| `bbc` | BBC News/GEL: barra negra y roja, tarjetas con filete rojo | Source Sans 3 (en lugar de Reith) | Claro |
+| `anthropic` | Marfil cálido, titulares con serifa, acento arcilla | Source Serif 4 e Inter | Claro |
+
+- **Sin desenfoque:** el tema de Apple no usa desenfoque de fondo, porque
+  CasparCG dibuja el HTML sin GPU por defecto y el desenfoque es caro.
+- **Logos en temas claros:** como suelen ser claros, van sobre una ficha
+  oscura en los temas claros.
+
+**Fuentes incluidas en el proyecto** (todas SIL OFL 1.1, de Fontsource):
+- Solo el subconjunto latino, con `font-display: block` para que no se vea
+  un parpadeo con la fuente de respaldo.
+- El navegador descarga únicamente la fuente del tema activo; el Service
+  Worker las guarda todas para el arranque sin conexión.
+- Así la pantalla se ve igual en cualquier equipo, sin depender de las
+  fuentes instaladas. El tema predeterminado pasó de la fuente del sistema
+  a Noto Sans incluida.
+
+**Selección:**
+- *Configuración → Pantalla → Tema* (solo administradores). Llega a la
+  pantalla con el resto de los ajustes y, como todo cambio, se aplica al
+  pasar a la siguiente diapositiva.
+- `/?theme=<clave>` fuerza un tema solo en esa pantalla, para probarlo (por
+  ejemplo, en CasparCG) antes de cambiar el ajuste. El servidor solo acepta
+  claves de la lista.
+- Si el tema guardado deja de existir, se usa el predeterminado.
+
+**Vista previa** (*Pantalla → Vista previa*, para administradores y editores):
+- Una grilla de miniaturas, al estilo de la vista de diapositivas de un
+  programa de presentaciones, con cada página de la rotación en orden, su
+  número, nombre, inicio dentro del ciclo y duración, más el total del
+  ciclo.
+- Las miniaturas usan los mismos componentes que la pantalla, a escala y
+  sin animaciones, así que muestran exactamente lo que saldrá al aire.
+- Se puede elegir cualquier tema para compararlos sin tocar la pantalla.
+- Va en un iframe (`/admin/preview/frame`, con la sesión del panel) para que
+  los estilos de la pantalla no se mezclen con los de Filament.
+- Nunca reproduce la radio: el servidor la entrega desactivada a la vista
+  previa, sin importar el ajuste.
+
+**Legibilidad y desbordes** (revisados en los ocho temas con un script que
+mide recortes y desbordes en cada diapositiva):
+- **Reloj con segundos.** Usa cifras tabulares (`tabular-nums`), así que el
+  ancho no cambia mientras corren, sin necesidad de una fuente
+  monoespaciada. Se verificó en todos los temas.
+- **Textos truncados.** Los textos truncados o limitados a N líneas dejan
+  espacio para los trazos que bajan de la línea (g, p, y): antes,
+  "pichilemutv.org" se leía ".orq".
+- **Listas que siempre caben** (números de emergencia, redes): la lista toma
+  el espacio que queda en la diapositiva, las filas se lo reparten hasta un
+  alto natural, y el texto de cada tarjeta escala con su alto (unidades
+  `cqh`). Los nombres de usuario largos ocupan hasta dos líneas en vez de
+  cortarse con "…".
+- **Máximo por página:** 9 números de emergencia y 8 redes. Con más, el texto
+  queda demasiado pequeño para leerse desde lejos.
+
 ## Pendientes
 
 - **Audio HTML en CasparCG:** averiguar si el silencio del productor HTML en
   2.5.1 para Linux tiene solución (configuración o versión).
 - **Despliegue en el CT:** distribución, servidor web, HTTPS (necesario para el
   Service Worker) y cómo se publica.
-- **Tipografía y diseño visual** de la pantalla al aire (con colores y
-  tipografía personalizables por instancia).
+- **Colores propios por instancia** sobre el tema elegido (la tipografía y el
+  diseño ya se resuelven con los temas).

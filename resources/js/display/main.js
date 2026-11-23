@@ -18,6 +18,7 @@ const app = createApp(App, {
     apiUrl: root.dataset.apiUrl,
     healthUrl: root.dataset.healthUrl,
     guides: new URLSearchParams(window.location.search).has('guides'),
+    themeOverride: root.dataset.themeOverride || null,
 });
 
 // Log and carry on: an error must never leave the screen blank.

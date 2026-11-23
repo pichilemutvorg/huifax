@@ -46,10 +46,7 @@ onBeforeUnmount(() => {
             alt=""
             class="background-enter absolute inset-0 h-full w-full object-cover"
         />
-        <!-- Keeps text contrast on any photo. -->
-        <div
-            v-if="layers.length"
-            class="absolute inset-0 bg-linear-to-b from-base-100/85 via-base-100/70 to-base-100/90"
-        />
+        <!-- Keeps text contrast on any photo; how much is up to the theme. -->
+        <div v-if="layers.length" class="hx-scrim absolute inset-0" />
     </div>
 </template>
