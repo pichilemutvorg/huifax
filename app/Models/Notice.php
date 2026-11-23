@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasDisplayOrder;
+use App\Models\Concerns\HasPublicationWindow;
 use Database\Factories\NoticeFactory;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Scope;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notice extends Model
 {
     /** @use HasFactory<NoticeFactory> */
-    use HasDisplayOrder, HasFactory;
+    use HasDisplayOrder, HasFactory, HasPublicationWindow;
 
     /**
      * Get the attributes that should be cast.
@@ -31,30 +29,5 @@ class Notice extends Model
             'sort_order' => 'integer',
             'is_enabled' => 'boolean',
         ];
-    }
-
-    /**
-     * Publication status at the given moment: active, scheduled, expired or disabled.
-     */
-    public function statusAt(DateTimeInterface $moment): string
-    {
-        return match (true) {
-            ! $this->is_enabled => 'disabled',
-            $this->starts_at !== null && $this->starts_at > $moment => 'scheduled',
-            $this->ends_at !== null && $this->ends_at <= $moment => 'expired',
-            default => 'active',
-        };
-    }
-
-    /**
-     * Notices whose publication window includes the given moment.
-     * A missing start or end leaves that side of the window open.
-     */
-    #[Scope]
-    protected function activeAt(Builder $query, DateTimeInterface $moment): void
-    {
-        $query
-            ->where(fn (Builder $q) => $q->whereNull('starts_at')->orWhere('starts_at', '<=', $moment))
-            ->where(fn (Builder $q) => $q->whereNull('ends_at')->orWhere('ends_at', '>', $moment));
     }
 }
